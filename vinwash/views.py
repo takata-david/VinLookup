@@ -178,14 +178,21 @@ def upload_file(request):
         if form.is_valid():
             bid = request.POST.get('business')
             udt = request.POST.get('date')
+            udt = datetime.datetime.strptime(udt, "%d/%m/%Y").strftime("%Y-%m-%d")
             print('business id after this')
             print(bid)
-
             uploaded_file = request.FILES['filename']
-            file1 = pd.read_csv(uploaded_file, usecols=[0, 1, 2], encoding='latin1', sep=',')
 
-            df = pd.DataFrame(data=file1)
-            df.columns = ['vin', 'location', 'stock']
+            of = pd.read_csv(uploaded_file, usecols=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+                             encoding='latin1', sep=',')
+            of.columns = ['vin', 'location', 'stock', 'image', 'model', 'year', 'inventoried', 'odoreading', 'engine',
+                          'gearboxtype', 'gears', 'doors', 'site', 'registration', 'cod', 'enginenumber',
+                          'purchasedate',
+                          'fueltype', 'bodystyle', 'classification']
+            forminstance = form.save()
+            recordid = forminstance.pk
+
+            df = of
             df['vin'] = df['vin'].str.replace('.', '')
             df['vin'] = df['vin'].str.replace(',', '')
             df['vin'] = df['vin'].str.replace(';', '')
@@ -201,8 +208,6 @@ def upload_file(request):
             df['vin'] = df['vin'].str.replace('&', '')
             df['vin'] = df['vin'].str.replace('*', '')
 
-            print(df)
-
             df = df[df['vin'].apply(lambda x: len(str(x)) == 17)]
             df['vin'] = df['vin'].str.replace('i', '1')
             df['vin'] = df['vin'].str.replace('o', '0')
@@ -210,53 +215,69 @@ def upload_file(request):
 
             list1 = original_vins.objects.values_list('vin', flat=True)
             vin_list = list(list1)
-            # print(vin_list)
             dup_vins = df[df['vin'].isin(vin_list)]  # duplicate b/w 2 files
-            # print(dup_vins['vin'])
             dup_data = original_vins.objects.filter(vin__in=list(dup_vins['vin'])).values_list('vin', 'file_id')
-            # dup_data = original_vins.objects.filter(vin__in=list(dup_vins))
-            # print(dup_data)
 
-            df = df[~df['vin'].isin(vin_list)]
-
-            if df.shape[0] > 0:
-                forminstance = form.save()
-                recordid = forminstance.pk
+            if len(list(dup_vins['vin'])) > 0:
                 for (vin, filid) in dup_data:
-                    instance = vin_conflicts(vin=vin, previous_occurence_fileid=filid,
-                                             current_occurence_fileid=recordid,
-                                             conflict_location='', conflict_stocknumber='')
-                    instance.save()
+                    e1 = vinfile.objects.get(id=filid)
+                    c1 = e1.business_id
 
-                print(wiki_vincodes.objects.values_list('id', 'code', 'make'))
+                    e2 = vinfile.objects.get(id=recordid)
+                    c2 = e2.business_id
+
+                    if c1 == c2:
+                        pass
+                    else:
+                        instance = vin_conflicts(vin=vin, previous_occurence_fileid=filid,
+                                                 current_occurence_fileid=recordid,
+                                                 conflict_location='', conflict_stocknumber='')
+                        instance.save()
+
+            df = df[~df['vin'].isin(vin_list)]  # unique vins
+            if df.shape[0] > 0:
                 table_frame = pd.DataFrame(wiki_vincodes.objects.values_list('id', 'code', 'make'))
                 table_frame.columns = ['id', 'code', 'make']
-                print('table frame below this')
-                print(table_frame)
-                # codes = wiki_vincodes.objects.all()
                 prefix_list = list(table_frame['code'])
-                print(prefix_list)
-                for j in df.iterrows():
-                    vn = j[1]['vin']
-                    lc = j[1]['location']
-                    st = j[1]['stock']
-
+                for h in df.iterrows():
+                    vn = h[1]['vin']
+                    lc = h[1]['location']
+                    st = h[1]['stock']
+                    img = h[1]['image']
+                    ext = 'JPG'
+                    if pd.isnull(img):
+                        loc = ''
+                    else:
+                        loc = img + '.' + ext
                     pre3 = vn[0:3]
                     pre2 = vn[0:2]
                     if pre2 in prefix_list:
-                        m_pre = pre2
-                        m_oem = list(table_frame[table_frame['code'] == pre2]['id'])
-                        print(m_oem[0])
+                        m_oem = int(table_frame[table_frame['code'] == pre2]['id'])
                     elif pre3 in prefix_list:
-                        m_pre = pre3
-                        m_oem = list(table_frame[table_frame['code'] == pre3]['id'])
-                        print(m_oem[0])
+                        m_oem = int(table_frame[table_frame['code'] == pre3]['id'])
                     else:
-                        m_pre = ''
                         m_oem = ''
+
                     instance = original_vins(vin=vn, location=lc, stock_number=st, date=udt, file_id=recordid,
-                                             business_id=bid, wiki_id=m_oem)
+                                             business_id=bid, wiki_id=m_oem, img=loc)
                     instance.save()
+
+                    sdsf = ['model', 'year', 'inventoried', 'odoreading', 'engine',
+                            'gearboxtype', 'gears', 'doors', 'site', 'registration', 'cod', 'enginenumber',
+                            'purchasedate',
+                            'fueltype', 'bodystyle', 'classification']
+
+                    instance1 = original_extension(vin=vn, model=h[1]['model'], year=h[1]['year'],
+                                                   inventoried=h[1]['inventoried'],
+                                                   odoreading=h[1]['odoreading'], engine=h[1]['engine'],
+                                                   gearboxtype=h[1]['gearboxtype'],
+                                                   gears=h[1]['gears'], doors=h[1]['doors'], sute=h[1]['site'],
+                                                   registration=h[1]['registration'],
+                                                   cod=h[1]['cod'], enginenumber=h[1]['enginenumber'],
+                                                   purchasedate=h[1]['purchasedate'],
+                                                   fueltype=h[1]['fueltype'], bodystyle=h[1]['bodystyle'],
+                                                   classification=h[1]['classification'])
+                    instance1.save()
 
                 df1 = df
                 dfToList = df1['vin'].tolist()
@@ -270,6 +291,7 @@ def upload_file(request):
                 resultdf = pd.DataFrame(
                     columns=['VehicleAirbagID', 'VehicleID', 'VIN', 'PRANum', 'Make', 'Model', 'Series', 'Year',
                              'AirbagLocation', 'IsAlpha', 'IsSubmitted'])
+
                 if result != None:
                     for k in result:
                         VehicleAirbagID = str(k['VehicleAirbagID'])
@@ -283,6 +305,15 @@ def upload_file(request):
                         AirbagLocation = str(k['AirbagLocation'])
                         IsAlpha = str(k['IsAlpha'])
                         IsSubmitted = str(k['IsSubmitted'])
+
+                        stk_frame = df[df['vin'] == VIN]
+
+                        if len(stk_frame['stock'].values) > 0:
+                            stk = stk_frame['stock'].values[0]
+                            lac = stk_frame['location'].values[0]
+                        else:
+                            stk = ''
+                            lac = ''
 
                         resultdf = resultdf.append({'VehicleAirbagID': VehicleAirbagID,
                                                     'VehicleID': VehicleID,
@@ -302,13 +333,15 @@ def upload_file(request):
                                                 airbaglocation=AirbagLocation,
                                                 isalpha=IsAlpha, issubmitted=IsSubmitted,
                                                 bagcollectiondate="2015-11-22",
-                                                file_id=recordid)
+                                                file_id=recordid, stock_number=stk, location=lac)
                         instance1.save()
-                messages.add_message(request, messages.INFO, "Process executed successfully")
-            else:
-                messages.add_message(request, messages.INFO, "All vins in this file already exist in DB!!")
 
-            return redirect('dashboard')
+
+
+
+
+            print(recordid)
+
     else:
         form = vinfileForm()
     context = {
