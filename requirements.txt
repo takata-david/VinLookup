@@ -1,0 +1,15 @@
+django<2.2,>=2.1.0
+pillow
+django-crispy-forms
+numpy
+pandas
+requests
+pycparser
+pyopenssl
+vc
+mkl
+pyodbc
+django-pyodbc
+django-pyodbc-azure
+pysocks
+

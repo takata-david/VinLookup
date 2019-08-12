@@ -1,0 +1,111 @@
+{% extends "users/base.html" %}
+{% block content1 %}
+<h1 class="display-4 text-white mt-5 mb-2">Dashboard: Navigation and Reports</h1>
+{% endblock content1 %}
+{% block content2 %}
+
+    <div class="row">
+      <div class="col mb-5">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if abc %}
+            {{ abc }}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col mb-5">
+        <a class="btn btn-primary btn-lg" href="#">Add New Business &raquo;</a>
+      </div>
+      <div class="col mb-5">
+        <a class="btn btn-primary btn-lg" href="{% url 'upload_bulk' %}">Upload Bulke &raquo;</a>
+      </div>
+      <div class="col mb-5">
+        <a class="btn btn-primary btn-lg" href="{% url 'upload_file' %}">Upload Via Form &raquo;</a>
+      </div>
+      <div class="col mb-5">
+          <a class="btn btn-primary btn-lg" href="{% url 'upload_file' %}">Miscellaneous &raquo;</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col mb-5">
+        <a class="btn btn-primary btn-lg" href="#">Report 1 &raquo;</a>
+      </div>
+      <div class="col mb-5">
+        <a class="btn btn-primary btn-lg" href="#">Report 2 &raquo;</a>
+      </div>
+      <div class="col mb-5">
+        <a class="btn btn-primary btn-lg" href="#">Report 3 &raquo;</a>
+      </div>
+      <div class="col mb-5">
+        <a class="btn btn-primary btn-lg" href="#">Report 4 &raquo;</a>
+      </div>
+    </div>
+
+
+
+    <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+    <div class="row">
+      <div class="col mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+
+            <div id="container"></div>
+
+          </div>
+
+        </div>
+      </div>
+      <div class="col mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+
+
+            <div id="container1" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+
+            <div id="container2"></div>
+
+          </div>
+
+        </div>
+      </div>
+      <div class="col mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+
+
+            <div id="container3" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+{% endblock content2 %}
+
