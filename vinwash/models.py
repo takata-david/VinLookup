@@ -32,7 +32,7 @@ class business(models.Model):
 
 class vinfile(models.Model):
     #filename = models.CharField(max_length=200)
-    filename = models.FileField(upload_to='')
+    filename = models.FileField(upload_to='electronic/')
     date = models.DateField(null=True)
     user = models.CharField(max_length=100, null=True)
     notes = models.TextField(null=True)
