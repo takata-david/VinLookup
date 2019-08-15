@@ -16,6 +16,7 @@ urlpatterns = [
     path('files/bulk/', views.upload_bulk, name='upload_bulk'),
     path('report/1/', views.vins_located, name='vins-located'),
     path('report/2/', views.vins_make_consl, name='vins-make-consl'),
+    path('report/<slug:oem>/', views.oem_report, name='oem-report'),
     path('vinlookup/<slug:vin>/', views.vin_lookup, name='vin-lookup'),
 ]
 

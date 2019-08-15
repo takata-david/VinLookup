@@ -187,3 +187,5 @@ class original_extension(models.Model):
     fueltype = models.TextField(null=True) #
     bodystyle = models.TextField(null=True) #
     classification = models.TextField(null=True) #
+
+
