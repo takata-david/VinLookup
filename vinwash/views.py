@@ -86,7 +86,7 @@ def original_vins_data():
 
 
 def groups(oem):
-    pass
+    val = ''
     if oem == 'Honda':
         val = ['Honda']
     if oem == 'Nissan':
@@ -117,6 +117,112 @@ def months1():
     return months
 
 
+def washed_vins_bybusiness(oem):   # for current month
+    now = datetime.datetime.now()
+    current_month = now.strftime('%m')
+    current_day = now.strftime('%d')
+    if int(current_day) > 25:
+        c_m = current_month
+    elif (int(current_day) > 0) & (int(current_day) < 25) & (int(current_month) > 1):
+        c_m = int(current_month)-1
+    else:
+        c_m = current_month
+
+    if len(str(c_m)) == 1:
+        c_m = '0'+str(c_m)
+
+    tf1 = pd.DataFrame(business.objects.values_list('id', 'state', 'bname'))
+    tf1.columns = ['business_id', 'state', 'bname']
+    #print(tf1)
+
+
+    tf2 = pd.DataFrame(vinfile.objects.values_list('id', 'business_id', 'date'))
+    tf2.columns = ['file_id', 'business_id', 'date']
+    #print(tf2)
+    df1 = pd.merge(tf2, tf1, on='business_id', how='outer')
+    df1 = df1[~df1['file_id'].isna()]
+    df1['file_id'] = df1.apply(lambda row: int(row.file_id), axis=1)
+    #print(df1)
+
+
+    a = washed_vins.objects.values('vin', 'file_id', 'isalpha').filter(make=oem)
+    b = pd.DataFrame(a)
+    # print(b)
+    df2 = pd.merge(df1, b, on='file_id', how='outer')
+
+    df2['month'] = df2.apply(lambda row: row.date.strftime('%m'), axis=1)
+    df2['year'] = df2.apply(lambda row: row.date.strftime('%Y'), axis=1)
+
+    df2 = df2[df2['month'] == str(c_m)]
+    df2 = df2[~df2['vin'].isna()]
+    #print(df2)
+    dfarb = df2
+    dfvin = df2.drop_duplicates(subset='vin', keep='first')
+    dfalp = df2[df2['isalpha'] == 'True']
+    #print(b)
+    return df2
+
+
+def washed_vins_data_bystate_byoem(oem):
+    now = datetime.datetime.now()
+    current_month = now.strftime('%m')
+    current_day = now.strftime('%d')
+    #print(current_day)
+    #print(current_month)
+    if int(current_day) > 25:
+        c_m = current_month
+    elif (int(current_day) > 0) & (int(current_day) < 25) & (int(current_month) > 1):
+        c_m = int(current_month)-1
+    else:
+        c_m = current_month
+
+    if len(str(c_m)) == 1:
+        c_m = '0'+str(c_m)
+    #print(c_m)
+    tf1 = pd.DataFrame(business.objects.values_list('id', 'state'))
+    tf1.columns = ['business_id', 'state']
+
+    tf2 = pd.DataFrame(vinfile.objects.values_list('id', 'business_id', 'date'))
+    tf2.columns = ['file_id', 'business_id', 'date']
+    #print(tf2)
+    df1 = pd.merge(tf2, tf1, on='business_id', how='outer')
+    df1 = df1[~df1['file_id'].isna()]
+    df1['file_id'] = df1.apply(lambda row: int(row.file_id), axis=1)
+
+    a = washed_vins.objects.values('vin', 'file_id', 'isalpha').filter(make=oem)
+    b = pd.DataFrame(a)
+    #print(b)
+    df2 = pd.merge(df1, b, on='file_id', how='outer')
+
+    df2['month'] = df2.apply(lambda row: row.date.strftime('%m'), axis=1)
+    df2['year'] = df2.apply(lambda row: row.date.strftime('%Y'), axis=1)
+
+    df2 = df2[df2['month'] == str(c_m)]
+
+    dfarb = df2
+    dfvin = df2.drop_duplicates(subset='vin', keep='first')
+    dfalp = df2[df2['isalpha'] == 'True']
+
+    #print(df2)
+
+    states = ['NT', 'VIC', 'QLD', 'NSW', 'SA', 'WA', 'TAS', 'ACT']
+    #data = []
+    bgs = []
+    vns = []
+    alp = []
+    for s in states:
+        bgs1 = dfarb[dfarb['state'] == s]
+        vns1 = dfvin[dfvin['state'] == s]
+        alp1 = dfalp[dfalp['state'] == s]
+        #z = df2[df2['state'] == s]
+        bgs.append(bgs1.shape[0])
+        vns.append(vns1.shape[0])
+        alp.append(alp1.shape[0])
+
+    #print(states)
+    #print(bgs, vns, alp)
+    return states, bgs, vns, alp
+
 def washed_vins_data_bymonth():
     table_frame = pd.DataFrame(vinfile.objects.values_list('id', 'business_id', 'date'))
     table_frame.columns = ['file_id', 'business_id', 'date']
@@ -129,7 +235,7 @@ def washed_vins_data_bymonth():
     a = washed_vins.objects.values('vin', 'file_id', 'isalpha')
     b = pd.DataFrame(a)
     df1 = pd.merge(table_frame, b, on='file_id', how='outer')
-    df1 = df1[df1['year'] == '2019']
+    #df1 = df1[df1['year'] == '2019']
     dfx = df1
     dfx = dfx.drop_duplicates(subset='vin', keep='first')
     dfy = df1[df1['isalpha'] == 'True']
@@ -164,7 +270,7 @@ def original_vins_data_bymonth():
     b = pd.DataFrame(a)
     data2 = pd.DataFrame()
     df1 = pd.merge(table_frame, b, on='file_id', how='outer')
-    df1 = df1[df1['year'] == '2019']
+    #df1 = df1[df1['year'] == '2019']
     dfx = df1
     vins1 = []
     for m in months:
@@ -185,7 +291,7 @@ def washed_vins_data_bymonth_byoem(oem):
     a = washed_vins.objects.values('vin', 'file_id', 'isalpha').filter(make=oem)
     b = pd.DataFrame(a)
     df1 = pd.merge(table_frame, b, on='file_id', how='outer')
-    df1 = df1[df1['year'] == '2019']
+    #df1 = df1[df1['year'] == '2019']
     dfx = df1
     dfx = dfx.drop_duplicates(subset='vin', keep='first')
     dfy = df1[df1['isalpha'] == 'True']
@@ -210,37 +316,159 @@ def washed_vins_data_bymonth_byoem(oem):
 def oem_report(request, oem):
     months = months1()
     x = groups(oem)
+
+    var = months
+
     # this is for first section of report: all makes data
-    airbags1, alpha1, vins1, period_size1 = washed_vins_data_bymonth()
+    airbags1, alpha1, vins1, period_size1 = washed_vins_data_bymonth() # for all oem
     o_vins_bymonth, period_size2 = original_vins_data_bymonth()
-    zipped_list = zip(months, vins1, alpha1, airbags1, o_vins_bymonth)
+
+    var.append(["Total", ""])
+    vins1.append(sum(vins1))
+    alpha1.append(sum(alpha1))
+    airbags1.append(sum(airbags1))
+    o_vins_bymonth.append(sum(o_vins_bymonth))
+
+
+    zipped_list = zip(var, vins1, alpha1, airbags1, o_vins_bymonth)
     context = {
         'zip': zipped_list,
         'oem': x
     }
 
+    #context.update({'by_biz1': zipped_list_biz})
+
     # this is for particular oem
 
     keyss = ['oem1', 'oem2', 'oem3']
+    keyss1 = ['oem11', 'oem22', 'oem33']
+    keyss11 = ['oem111', 'oem222', 'oem333']
     names = ['name1', 'name2', 'name3']
     i = 0
     for o in x:
-        airbags1o, alpha1o, vins1o, period_size1o = washed_vins_data_bymonth_byoem(o)
+        airbags1o, alpha1o, vins1o, period_size1o = washed_vins_data_bymonth_byoem(o) # for pecific oem
+        vins1o.append(sum(vins1o))
+        alpha1o.append(sum(alpha1o))
+        airbags1o.append(sum(airbags1o))
         #wordFreqDic.update( {'before' : 23} )
-        zipped_list1 = zip(months, vins1o, alpha1o, airbags1o)
+        zipped_list1 = zip(var, vins1o, alpha1o, airbags1o)
         context.update({keyss[i]: zipped_list1})
         context.update({names[i]: o})
+
+        # ---------------------------------------
+        states, bgs, vns, alp = washed_vins_data_bystate_byoem(o)
+        ss = states + ['Total']
+        bgs.append(sum(bgs))
+        vns.append(sum(vns))
+        alp.append(sum(alp))
+        #print(ss)
+        #print(alp)
+        #print(vns)
+        #print(bgs)
+        zipped_list2 = zip(ss, bgs, vns, alp)
+        context.update({keyss1[i]: zipped_list2})
+        # --------------------------------------- last section of report
+        dfb = washed_vins_bybusiness(o)  # data frame business wise
+        biz_df = dfb.drop_duplicates(subset='business_id', keep='first')
+        bizid = biz_df['business_id'].tolist()
+        biznm = biz_df['bname'].tolist()
+        #print(biznm)
+        #print(bizid)
+        #print(biz_df)
+        dfarb = []
+        dfvin = []
+        dfalp = []
+
+        for bi in bizid:
+            bhalu = dfb[dfb['business_id'] == bi]
+            pass
+            d = bhalu
+            e = bhalu.drop_duplicates(subset='vin', keep='first')
+            f = bhalu[bhalu['isalpha'] == 'True']
+
+            dfarb.append(int(d.shape[0]))
+            dfvin.append(int(e.shape[0]))
+            dfalp.append(int(f.shape[0]))
+
+        biznm = biznm + ['Total']
+        dfarb.append(sum(dfarb))
+        dfvin.append(sum(dfvin))
+        dfalp.append(sum(dfalp))
+        zipped_list_biz = zip(biznm, dfarb, dfvin, dfalp)
+        context.update({keyss11[i]: zipped_list_biz})
+
+        # --------------------------------------- last section of report
+
         i = i + 1
 
-    '''
-    context = {
-        'zip': zipped_list,
-        'zip1': zipped_list1,
-        'oem': oem
-    }
-    '''
-    print(context)
+    #print(context)
     return render(request, 'vinwash/oem.html', context)
+
+
+def file_count(request):
+
+    tf1 = pd.DataFrame(business.objects.values_list('id', 'state', 'bname'))
+    tf1.columns = ['business_id', 'state', 'bname']
+    # print(tf1)
+
+    tf2 = pd.DataFrame(vinfile.objects.values_list('id', 'business_id', 'date', 'filename'))
+    tf2.columns = ['file_id', 'business_id', 'date', 'filename']
+
+    df1 = pd.merge(tf2, tf1, on='business_id', how='outer')
+    df1 = df1[~df1['file_id'].isna()]
+    df1['month'] = df1.apply(lambda row: row.date.strftime('%m'), axis=1)
+    df1['year'] = df1.apply(lambda row: row.date.strftime('%Y'), axis=1)
+    #print(df1)
+    month_file_count = []
+    months = months1()
+    for m in months:
+        df3 = df1[(df1['month'] == m[0]) & (df1['year'] == m[1])]
+        dfx = df3.drop_duplicates(subset='bname', keep='first')
+        #print(dfx)
+        month_files2 = df3.shape[0]
+        month_files1 = dfx.shape[0]
+        #print(m, month_files1)
+        print(m, month_files2)
+        #month_file_count.append(month_files)
+    #print(tf2)
+    '''
+    now = datetime.datetime.now()
+    current_month = now.strftime('%m')
+    current_day = now.strftime('%d')
+    if int(current_day) > 25:
+        c_m = current_month
+    elif (int(current_day) > 0) & (int(current_day) < 25) & (int(current_month) > 1):
+        c_m = int(current_month) - 1
+    else:
+        c_m = current_month
+
+    if len(str(c_m)) == 1:
+        c_m = '0' + str(c_m)
+
+    tf1 = pd.DataFrame(business.objects.values_list('id', 'state', 'bname'))
+    tf1.columns = ['business_id', 'state', 'bname']
+    # print(tf1)
+
+    tf2 = pd.DataFrame(vinfile.objects.values_list('id', 'business_id', 'date'))
+    tf2.columns = ['file_id', 'business_id', 'date']
+    # print(tf2)
+    df1 = pd.merge(tf2, tf1, on='business_id', how='outer')
+    df1 = df1[~df1['file_id'].isna()]
+    df1['file_id'] = df1.apply(lambda row: int(row.file_id), axis=1)
+    # print(df1)
+
+    a = washed_vins.objects.values('vin', 'file_id', 'isalpha').filter(make=oem)
+    b = pd.DataFrame(a)
+    # print(b)
+    df2 = pd.merge(df1, b, on='file_id', how='outer')
+
+    df2['month'] = df2.apply(lambda row: row.date.strftime('%m'), axis=1)
+    df2['year'] = df2.apply(lambda row: row.date.strftime('%Y'), axis=1)
+
+    df2 = df2[df2['month'] == str(c_m)]
+    df2 = df2[~df2['vin'].isna()]
+    '''
+    return render(request, 'vinwash/file_count.html')
 
 
 
@@ -279,7 +507,8 @@ def dashboard(request):
         vins1.append(int(vins))
         alpha1.append(int(alpha))
     '''
-    airbags1, alpha1, vins1 = washed_vins_data_bymonth()
+    #airbags1, alpha1, vins1, period_size
+    airbags1, alpha1, vins1, period_size = washed_vins_data_bymonth()
     # ------------------------------- end of new code --------------------------------------
     ntl, vicl, qldl, nswl, sal, wal, tasl, actl = original_vins_data()
     context = {
@@ -610,6 +839,77 @@ def upload_file(request):
     return render(request, 'vinwash/upload_file.html', context)
 
 
+def star_detailed_upload(request):
+    meta = settings.MEDIA_ROOT + '\\' + 'star.csv'
+    file1 = pd.read_csv(meta, encoding='latin1', sep=',')
+    #print(file1)
+    for j in file1.iterrows():
+        si = j[1]['Star#']
+        print(si)
+        vn = j[1]['VIN']
+        bc = j[1]['Bar Code']
+        lc = j[1]['Loc']
+        mk = j[1]['Make']
+        md = j[1]['Model']
+        sr = j[1]['Series']
+        yr = j[1]['Year']
+        pr = j[1]['PRA #']
+        al = j[1]['Alpha']
+        dt = j[1]['Date']
+        sv = j[1]['STAR Vendor Number']
+        st = j[1]['Status']
+        cr = j[1]['Courier']
+        wr = j[1]['Warehouse']
+        ri = j[1]['Recycler Inv']
+        nfn = j[1]['Notifier First Name']
+        nln = j[1]['Notifier Last Name']
+        ttl = j[1]['Title']
+        tdn = j[1]['Trading Name']
+        typ = j[1]['Type']
+        wbs = j[1]['Website']
+        dlr = j[1]['$']
+        mbl = j[1]['Mobile Phone Number']
+        eml = j[1]['Email']
+        #print(si)
+        #udt = datetime.datetime.strptime(dt, "%d/%m/%Y %I:%M:%S").strftime("%Y-%m-%d")
+        udt = datetime.datetime.strptime(dt, "%d/%m/%Y %H:%M").strftime("%Y-%m-%d")
+        #print(udt)
+        washed_vins.objects.filter(vin=vn).update(starid=si, barcode=bc, bagcollectiondate=udt,
+                                                            star_vendor_no=sv, location_status=st, bagcollectedby=cr,
+                                                            warehouse=wr, recycler_inv=ri, notifierfname=nfn,
+                                                            notifierlname=nln, title=ttl, tradingname=tdn,
+                                                            typeatstar=typ, website=wbs, dollaratstar=dlr,
+                                                            mobileatstar=mbl, emailatstar=eml)
+
+        objects = washed_vins.objects.filter(vin=vn)
+        for a in objects:
+            fileid = a.file_id
+            ob1 = vinfile.objects.filter(id=fileid)
+            for bbb in ob1:
+                bid = bbb.business_id
+                #print(bid)
+                bnm = j[1]['Recycler']
+                abn = j[1]['ABN']
+                str = j[1]['Street']
+                cty = j[1]['City']
+                stt = j[1]['State/Territory']
+                pcd = j[1]['Post Code']
+                bem = j[1]['Business Email']
+                bph = j[1]['Business Phone']
+                fax = j[1]['Fax']
+                fnm = j[1]['First Name']
+                lnm = j[1]['Last Name']
+                anm = j[1]['Account Name']
+                bsb = j[1]['BSB']
+                ano = j[1]['Account Number']
+
+                business.objects.filter(id=bid).update(bname=bnm, abn=abn, street=str, city=cty, state=stt, zip=pcd, email=bem,
+                                                       phone=bph, fax=fax, fname=fnm, lname=lnm, account_name=anm, bsb=bsb,
+                                                       account_number=ano)
+
+
+    return render(request, 'vinwash/upload_file.html')
+
 #def upload_automated(request):
 def upload_bulk(request):
     meta = settings.MEDIA_ROOT + '\\' + 'filenames.csv'
@@ -714,8 +1014,6 @@ def upload_bulk(request):
         df['vin'] = df['vin'].apply(lambda x: x.replace('`', ''))
         #df['vin'] = df['vin'].apply(lambda x: x.replace(" ", ""))
         df['vin'] = df['vin'].str.strip()
-
-
 
 
 
@@ -967,4 +1265,5 @@ def vin_lookup(request, vin):
             'notfound': 'Vin Not Found in business files'
         }
     return render(request, 'vinwash/vinlookup.html', context)
+
 
