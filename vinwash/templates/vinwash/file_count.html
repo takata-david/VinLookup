@@ -1,0 +1,142 @@
+{% load static %}
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>ARAA Home Page</title>
+
+  <!-- This one came with template:: Bootstrap core CSS -->
+  <link href="{% static 'vinwash/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+  <!-- This one came with template:: Custom styles for this template -->
+  <link rel="stylesheet" href="{% static 'vinwash/business-frontpage.css' %}" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" type="text/css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" type="text/css">
+
+
+   <!-- This one is for progress bar -->
+   <style>
+    #myProgress {
+      width: 100%;
+      background-color: #ddd;
+    }
+
+    #myBar {
+      width: 10%;
+      height: 30px;
+      background-color: #4CAF50;
+      text-align: center; /* To center it horizontally (if you want) */
+      line-height: 30px; /* To center it vertically */
+      color: white;
+    }
+  </style>
+  <!-- this one is for highcharts -->
+  <style type="text/css">
+		#container {
+			min-width: 310px;
+			max-width: 800px;
+			height: 400px;
+			margin: 0 auto
+		}
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <!-- Header -->
+
+
+  <!-- Page Content -->
+  <div class="container">
+
+
+      <!-- --------------------------------------------------------- content 2 --------------------------------------------------------------------->
+
+
+
+
+    <div class="row justify-content-md-center">
+      <div class="col col-lg-4 ">
+        ARAA SALVAGE TAKATA AIRBAGS RECOVERY PROGRAM
+        MONTHLY JULY 2019 REPORT
+        BMW MOTORS AUSTRALIA LIMITED
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h1>ALL MAKES DATA</h1>
+      </div>
+    </div>
+    <div class="row">
+        <table id="" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>mm-yyyy</th>
+                    <th>Ttotal Vin Processed</th>
+                    <th>Total VINs identified as Affected VINs</th>
+                    <th>Total Alpha Airbags Identified</th>
+                    <th>Total Airbags identified as Affected Airbags</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if zip %}
+                    {% for month, vins1, alpha1, airbags1, o_vins_bymonth in zip %}
+                        <tr>
+                            <td>{{ month.0 }} - {{ month.1 }} </td>
+                            <td>{{ o_vins_bymonth }}</td>
+                            <td>{{ vins1 }}</td>
+                            <td>{{ alpha1 }}</td>
+                            <td>{{ airbags1 }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <br><br>
+    <br><br>
+    <br><br>
+    <br><br>
+      <!-- --------------------------------------------------------- content 2 --------------------------------------------------------------------->
+
+
+
+
+
+
+
+
+    <!-- /.row -->
+  </div>
+  <!-- /.container -->
+
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'vinwash/jquery.min.js' %}"></script>
+  <script src="{% static 'vinwash/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- this js for progress bar -->
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+  <script src="{% static 'vinwash/highchart/export-data.js' %}"></script>
+  <script src="{% static 'vinwash/highchart/exporting.js' %}"></script>
+  <script src="{% static 'vinwash/highchart/highcharts.js' %}"></script>
+  <script src="{% static 'vinwash/highchart/series-label.js' %}"></script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function() {
+        $('#example').DataTable();
+      } );
+  </script>
+</body>
+</html>

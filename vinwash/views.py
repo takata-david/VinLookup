@@ -24,6 +24,7 @@ from araa import settings
 import io
 import datetime
 from django.db.models import Count
+import zcrmsdk as zoho
 from django import template
 
 # Create your views here.
@@ -1214,6 +1215,41 @@ def vins_make_consl(request):
     }
     return render(request, 'vinwash/report-2.html', context)
 
+
+def zoho_sync(request):
+    print("we are here")
+    url = 'https://crm.zoho.com/crm/v2/functions/prafull/actions/execute?auth_type=apikey&zapikey=1003.b8dcef9cb0743151af0b218cc1254715.7153890a3ea6d11cc7e7e0aed6ae5df3'
+    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+    #r = requests.post(url, data=js.dumps(dfToList), headers=headers)
+    r = requests.get(url=url)
+    print(r)
+
+    p = r.json()
+    #print(p)
+    #print('------------------------------------------------')
+    a = p['code']
+    #print(a)
+    b = p['details']
+    #print(b)
+    c = b['userMessage']
+    #print(c)
+    rec = len(c)
+    #rec = rec/2
+    id = []
+    bname = []
+    for r in range(0,rec):
+        if r%2 == 0:
+            id.append(c[r])
+        else:
+            bname.append(c[r])
+
+    print(id)
+    print(bname)
+    #j = js.loads(p)
+    #print(j)
+    #result = j['Result']
+    #print(result)
+    return render(request, 'vinwash/upload_file.html')
 
 def vin_lookup(request, vin):
     a = vin

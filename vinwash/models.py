@@ -89,6 +89,15 @@ class washed_vins(models.Model):
     file = models.ForeignKey(
         vinfile, on_delete=models.CASCADE, null=True
     )
+    notifierfname = models.TextField(null=True)
+    notifierlname = models.TextField(null=True)
+    tradingname = models.TextField(null=True)
+    website = models.TextField(null=True)
+    title = models.TextField(null=True)
+    emailatstar = models.TextField(null=True)
+    mobileatstar = models.TextField(null=True)
+    typeatstar = models.TextField(null=True)
+    dollaratstar = models.TextField(null=True)
     '''
     business = models.ForeignKey(
         business, on_delete=models.PROTECT

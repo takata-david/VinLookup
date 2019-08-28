@@ -17,7 +17,10 @@ urlpatterns = [
     path('report/1/', views.vins_located, name='vins-located'),
     path('report/2/', views.vins_make_consl, name='vins-make-consl'),
     path('report/<slug:oem>/', views.oem_report, name='oem-report'),
+    path('report1/filecount/', views.file_count, name='file-count'),
     path('vinlookup/<slug:vin>/', views.vin_lookup, name='vin-lookup'),
+    path('upload/star/', views.star_detailed_upload, name='vin-detailed-upload'),
+    path('zoho/', views.zoho_sync, name='zoho-sync'),
 ]
 
 if settings.DEBUG:
