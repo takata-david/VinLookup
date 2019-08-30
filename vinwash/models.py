@@ -179,22 +179,22 @@ class staff(models.Model):
 
 
 class original_extension(models.Model):
-    vin = models.TextField(null=True) #
-    model = models.TextField(null=True) #
-    year = models.TextField(null=True) #
-    inventoried = models.TextField(null=True) #
-    odoreading = models.TextField(null=True) #
-    engine = models.TextField(null=True) #
-    gearboxtype = models.TextField(null=True) #
-    gears = models.TextField(null=True) #
-    doors = models.TextField(null=True) #
-    sute = models.TextField(null=True) #
-    registration = models.TextField(null=True) #
-    cod = models.TextField(null=True) #
-    enginenumber = models.TextField(null=True) #
-    purchasedate = models.TextField(null=True) #
-    fueltype = models.TextField(null=True) #
-    bodystyle = models.TextField(null=True) #
-    classification = models.TextField(null=True) #
+    vin = models.TextField(null=True)
+    model = models.TextField(null=True)
+    year = models.TextField(null=True)
+    inventoried = models.TextField(null=True)
+    odoreading = models.TextField(null=True)
+    engine = models.TextField(null=True)
+    gearboxtype = models.TextField(null=True)
+    gears = models.TextField(null=True)
+    doors = models.TextField(null=True)
+    sute = models.TextField(null=True)
+    registration = models.TextField(null=True)
+    cod = models.TextField(null=True)
+    enginenumber = models.TextField(null=True)
+    purchasedate = models.TextField(null=True)
+    fueltype = models.TextField(null=True)
+    bodystyle = models.TextField(null=True)
+    classification = models.TextField(null=True)
 
 
