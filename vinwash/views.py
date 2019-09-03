@@ -298,10 +298,10 @@ def original_vins_data_bymonth():
             df3 = dfx[(dfx['month'] == m[0]) & (dfx['year'] == m[1])]
             vins = int(df3.shape[0])
             vins1.append(int(vins))
-            print('1')
-            print(vins1)
-            print('2')
-            print(period_size)
+            #print('1')
+            #print(vins1)
+            #print('2')
+            #print(period_size)
         return vins1, period_size
     else:
         return [0], 0
@@ -324,6 +324,7 @@ def washed_vins_data_bymonth_byoem(oem):
         a = washed_vins.objects.values('vin', 'file_id', 'isalpha').filter(make=oem)
         b = pd.DataFrame(a)
         #print('washed vins')
+        print('oem airbag count affected')
         print(b.shape)
         df1 = pd.merge(table_frame, b, on='file_id', how='outer')
         df1 = df1[~df1['vin'].isna()]
@@ -333,8 +334,9 @@ def washed_vins_data_bymonth_byoem(oem):
 
         dfx = df1
         dfx = dfx.drop_duplicates(subset='vin', keep='first')
-        #print('unique vins')
-        #print(dfx.shape)
+        print('unique vins')
+        print(dfx.shape)
+        print(dfx)
         dfy = df1[df1['isalpha'] == 'True']
         airbags1 = []
         vins1 = []
@@ -391,7 +393,9 @@ def oem_report(request, oem):
     names = ['name1', 'name2', 'name3']
     i = 0
     for o in x:
+        print(o)
         airbags1o, alpha1o, vins1o, period_size1o = washed_vins_data_bymonth_byoem(o) # for pecific oem
+        print(vins1o)
         vins1o.append(sum(vins1o))
         alpha1o.append(sum(alpha1o))
         airbags1o.append(sum(airbags1o))
@@ -855,6 +859,10 @@ def upload_file(request):
     return render(request, 'vinwash/upload_file.html', context)
 
 
+def undertaking_detailed_upload(request):
+    pass
+
+
 @login_required
 def star_detailed_upload(request):
     meta = settings.MEDIA_ROOT + '\\' + 'star.csv'
@@ -1276,13 +1284,9 @@ def zoho_sync(request):
             id.append(c[r])
         else:
             bname.append(c[r])
+    for i in range(len(id)):
+        print(id[i], bname[i])
 
-    print(id)
-    print(bname)
-    #j = js.loads(p)
-    #print(j)
-    #result = j['Result']
-    #print(result)
     return render(request, 'vinwash/upload_file.html')
 
 def vin_lookup(request, vin):

@@ -123,6 +123,21 @@ class weeks(models.Model):
     weekno = models.IntegerField(null=True)
 
 
+class undertaking(models.Model):
+    uid = models.TextField(null=True)
+    dateofsale = models.TextField(null=True)
+    writtenofftype = models.TextField(null=True)
+    notfierfname = models.TextField(null=True)
+    notifierlname = models.TextField(null=True)
+    starvendornum = models.TextField(null=True)
+    purchaserfname = models.TextField(null=True)
+    purchaserlname = models.TextField(null=True)
+    purchaseremail = models.TextField(null=True)
+    owner = models.TextField(null=True)
+    seller = models.TextField(null=True)
+    status = models.TextField(null=True)
+
+
 class original_vins(models.Model):
     vin = models.CharField(max_length=17, null=True)
     stock_number = models.TextField(null=True)
@@ -138,13 +153,8 @@ class original_vins(models.Model):
     )
     wiki_id = models.CharField(max_length=10, null=True)
     img = models.TextField(null=True)
-    #wiki_prefix = models.CharField(max_length=10, null=True)
-    #wiki_oem = models.TextField(null=True)
+    uid = models.ForeignKey(undertaking, on_delete=models.PROTECT, null=True)
 
-    '''
-    def __str__(self):
-        return 'vins for {} '.format(self.business)
-    '''
 
 class makes(models.Model):
     manufacturer = models.TextField(null=True)

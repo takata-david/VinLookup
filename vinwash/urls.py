@@ -22,6 +22,7 @@ urlpatterns = [
     path('vinlookup/<slug:vin>/', views.vin_lookup, name='vin-lookup'),
     path('upload/star/', views.star_detailed_upload, name='vin-detailed-upload'),
     path('zoho/', views.zoho_sync, name='zoho-sync'),
+    path('upload/undertaking/', views.undertaking_detailed_upload, name='undertaking-detailed-upload'),
 ]
 
 if settings.DEBUG:
