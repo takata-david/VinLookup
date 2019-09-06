@@ -103,6 +103,48 @@
     <br><br>
     <br><br>
     <br><br>
+    <div class="row">
+      <div class="col">
+        <h1>ALL MAKES DATA EXCLUDING SOLD</h1>
+      </div>
+    </div>
+    <div class="row">
+        <table id="" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>mm-yyyy</th>
+                    <th>Ttotal Vin Processed</th>
+                    <th>Total VINs identified <br> as Affected VINs</th>
+                    <th>Total Alpha Airbags <br> Identified</th>
+                    <th>Total Airbags identified <br> as Affected Airbags</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if zip_notsold %}
+                    {% for month, vins1, alpha1, airbags1, o_vins_bymonth in zip_notsold %}
+                        <tr>
+                            <td>{{ month.0 }} - {{ month.1 }} </td>
+                            <td>{{ o_vins_bymonth }}</td>
+                            <td>{{ vins1 }}</td>
+                            <td>{{ alpha1 }}</td>
+                            <td>{{ airbags1 }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <br><br>
+    <br><br>
+    <br><br>
+    <br><br>
+
+
+
+
+
+
+
     {% if oem1 %}
         <div class="row">
             <div class="col">

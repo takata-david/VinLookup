@@ -86,7 +86,7 @@ DATABASES = {
         'PASSWORD': 'Takata001',
         'OPTIONS': {
             'provider': 'SQLOLEDB',
-            'driver': 'ODBC Driver 13 for SQL Server',
+            'driver': 'ODBC Driver 17 for SQL Server',
         },
     }
 }

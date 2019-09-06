@@ -1,5 +1,5 @@
 from django.shortcuts import render,  redirect
-from django.db.models import Func
+from django.db.models import Q
 from django.db import models
 from django.views import generic
 from django.contrib.auth.decorators import login_required
@@ -153,12 +153,12 @@ def washed_vins_bybusiness(oem):   # for current month
 
         a = washed_vins.objects.values('vin', 'file_id', 'isalpha').filter(make=oem)
         b = pd.DataFrame(a)
-        # print(b)
+        #print(b)
         df2 = pd.merge(df1, b, on='file_id', how='outer')
-
+        df2 = df2[~df2['vin'].isna()]
         df2['month'] = df2.apply(lambda row: row.date.strftime('%m'), axis=1)
         df2['year'] = df2.apply(lambda row: row.date.strftime('%Y'), axis=1)
-
+        #print(df2)
         df2 = df2[df2['month'] == str(c_m)]
         df2 = df2[~df2['vin'].isna()]
         #print(df2)
@@ -204,6 +204,8 @@ def washed_vins_data_bystate_byoem(oem):
         #print(b)
         df2 = pd.merge(df1, b, on='file_id', how='outer')
 
+        df2 = df2[~df2['vin'].isna()]
+        #print(df2)
         df2['month'] = df2.apply(lambda row: row.date.strftime('%m'), axis=1)
         df2['year'] = df2.apply(lambda row: row.date.strftime('%Y'), axis=1)
 
@@ -239,12 +241,12 @@ def washed_vins_data_bystate_byoem(oem):
 
 def washed_vins_data_bymonth():
     table_frame = pd.DataFrame(vinfile.objects.values_list('id', 'business_id', 'date'))
-    print(len(table_frame))
+    #print(len(table_frame))
     if len(table_frame)>0:
         table_frame.columns = ['file_id', 'business_id', 'date']
         a = table_frame.shape
-        print("shape of empty table")
-        print(a)
+        #print("shape of empty table")
+        #print(a)
         table_frame['month'] = table_frame.apply(lambda row: row.date.strftime('%m'), axis=1)
         table_frame['year'] = table_frame.apply(lambda row: row.date.strftime('%Y'), axis=1)
 
@@ -252,7 +254,11 @@ def washed_vins_data_bymonth():
         states = ['NT', 'VIC', 'QLD', 'NSW', 'SA', 'WA', 'TAS', 'ACT']
         a = washed_vins.objects.values('vin', 'file_id', 'isalpha')
         b = pd.DataFrame(a)
+        #print(b)
         df1 = pd.merge(table_frame, b, on='file_id', how='outer')
+        #print(df1)
+        df1 = df1[~df1['vin'].isna()]
+        #print(df1)
         #df1 = df1[df1['year'] == '2019']
         dfx = df1
         dfx = dfx.drop_duplicates(subset='vin', keep='first')
@@ -277,6 +283,52 @@ def washed_vins_data_bymonth():
         return '0', '0', '0', '0'
 
 
+def washed_vins_data_bymonth_notsold():
+    table_frame = pd.DataFrame(vinfile.objects.values_list('id', 'business_id', 'date'))
+    #print(len(table_frame))
+    if len(table_frame)>0:
+        table_frame.columns = ['file_id', 'business_id', 'date']
+        a = table_frame.shape
+        #print("shape of empty table")
+        #print(a)
+        table_frame['month'] = table_frame.apply(lambda row: row.date.strftime('%m'), axis=1)
+        table_frame['year'] = table_frame.apply(lambda row: row.date.strftime('%Y'), axis=1)
+
+        months = months1()
+        states = ['NT', 'VIC', 'QLD', 'NSW', 'SA', 'WA', 'TAS', 'ACT']
+        a = washed_vins.objects.values('vin', 'file_id', 'isalpha').exclude(location='sold')
+        b = pd.DataFrame(a)
+        #print(b)
+        df1 = pd.merge(table_frame, b, on='file_id', how='outer')
+        #print(df1)
+        df1 = df1[~df1['vin'].isna()]
+        #print(df1)
+        #df1 = df1[df1['year'] == '2019']
+        dfx = df1
+        dfx = dfx.drop_duplicates(subset='vin', keep='first')
+        dfy = df1[df1['isalpha'] == 'True']
+        airbags1 = []
+        vins1 = []
+        alpha1 = []
+        period_size = len(months)
+        #print(period_size)
+        for m in months:
+            df2 = df1[(df1['month'] == m[0]) & (df1['year'] == m[1])]
+            df3 = dfx[(dfx['month'] == m[0]) & (dfx['year'] == m[1])]
+            df4 = dfy[(dfy['month'] == m[0]) & (dfy['year'] == m[1])]
+            airbags = int(df2.shape[0])
+            vins = int(df3.shape[0])
+            alpha = int(df4.shape[0])
+            airbags1.append(int(airbags))
+            vins1.append(int(vins))
+            alpha1.append(int(alpha))
+        return airbags1, alpha1, vins1, period_size
+    else:
+        return '0', '0', '0', '0'
+
+
+
+
 def original_vins_data_bymonth():
     df1 = pd.DataFrame()
     table_frame = pd.DataFrame(vinfile.objects.values_list('id', 'business_id', 'date'))
@@ -286,11 +338,49 @@ def original_vins_data_bymonth():
         table_frame.columns = ['file_id', 'business_id', 'date']
         table_frame['month'] = table_frame.apply(lambda row: row.date.strftime('%m'), axis=1)
         table_frame['year'] = table_frame.apply(lambda row: row.date.strftime('%Y'), axis=1)
+        #print(table_frame)
         #print(period_size)
         a = original_vins.objects.values('vin', 'file_id')
         b = pd.DataFrame(a)
-        data2 = pd.DataFrame()
+        #print(b)
+        #data2 = pd.DataFrame()
         df1 = pd.merge(table_frame, b, on='file_id', how='outer')
+        df1 = df1[~df1['vin'].isna()]
+        #print(df1)
+        #df1 = df1[df1['year'] == '2019']
+        dfx = df1
+        vins1 = []
+        for m in months:
+            df3 = dfx[(dfx['month'] == m[0]) & (dfx['year'] == m[1])]
+            vins = int(df3.shape[0])
+            vins1.append(int(vins))
+            #print('1')
+            #print(vins1)
+            #print('2')
+            #print(period_size)
+        return vins1, period_size
+    else:
+        return [0], 0
+
+
+def original_vins_data_bymonth_notsold():
+    df1 = pd.DataFrame()
+    table_frame = pd.DataFrame(vinfile.objects.values_list('id', 'business_id', 'date'))
+    months = months1()
+    period_size = len(months)
+    if table_frame.shape[0]>0:
+        table_frame.columns = ['file_id', 'business_id', 'date']
+        table_frame['month'] = table_frame.apply(lambda row: row.date.strftime('%m'), axis=1)
+        table_frame['year'] = table_frame.apply(lambda row: row.date.strftime('%Y'), axis=1)
+        #print(table_frame)
+        #print(period_size)
+        a = original_vins.objects.values('vin', 'file_id').exclude(location='sold')
+        b = pd.DataFrame(a)
+        #print(b)
+        #data2 = pd.DataFrame()
+        df1 = pd.merge(table_frame, b, on='file_id', how='outer')
+        df1 = df1[~df1['vin'].isna()]
+        #print(df1)
         #df1 = df1[df1['year'] == '2019']
         dfx = df1
         vins1 = []
@@ -324,8 +414,8 @@ def washed_vins_data_bymonth_byoem(oem):
         a = washed_vins.objects.values('vin', 'file_id', 'isalpha').filter(make=oem)
         b = pd.DataFrame(a)
         #print('washed vins')
-        print('oem airbag count affected')
-        print(b.shape)
+        #print('oem airbag count affected')
+        #print(b.shape)
         df1 = pd.merge(table_frame, b, on='file_id', how='outer')
         df1 = df1[~df1['vin'].isna()]
         #print(df1)
@@ -334,9 +424,9 @@ def washed_vins_data_bymonth_byoem(oem):
 
         dfx = df1
         dfx = dfx.drop_duplicates(subset='vin', keep='first')
-        print('unique vins')
-        print(dfx.shape)
-        print(dfx)
+        #print('unique vins')
+        #print(dfx.shape)
+        #print(dfx)
         dfy = df1[df1['isalpha'] == 'True']
         airbags1 = []
         vins1 = []
@@ -376,12 +466,33 @@ def oem_report(request, oem):
     else:
         pass
 
-
     zipped_list = zip(var, vins1, alpha1, airbags1, o_vins_bymonth)
     context = {
         'zip': zipped_list,
         'oem': x
     }
+
+    # ------------------------------------------------------------- not sold --------------------------
+    airbags11, alpha11, vins11, period_size11 = washed_vins_data_bymonth_notsold()  # for all oem
+
+    o_vins_bymonth2, period_size22 = original_vins_data_bymonth_notsold()
+
+    var.append(["Total", ""])
+    if len(vins1) > 1:
+        vins11.append(sum(vins11))
+        alpha11.append(sum(alpha11))
+        airbags11.append(sum(airbags11))
+        o_vins_bymonth2.append(sum(o_vins_bymonth2))
+        #print(vins11, alpha11, airbags11, o_vins_bymonth2)
+    else:
+        pass
+
+    zipped_list_notsold = zip(var, vins11, alpha11, airbags11, o_vins_bymonth2)
+    context.update({'zip_notsold': zipped_list_notsold})
+    # ------------------------------------------------------------- not sold --------------------------
+
+
+
 
     #context.update({'by_biz1': zipped_list_biz})
 
@@ -393,9 +504,9 @@ def oem_report(request, oem):
     names = ['name1', 'name2', 'name3']
     i = 0
     for o in x:
-        print(o)
+        #print(o)
         airbags1o, alpha1o, vins1o, period_size1o = washed_vins_data_bymonth_byoem(o) # for pecific oem
-        print(vins1o)
+        #print(vins1o)
         vins1o.append(sum(vins1o))
         alpha1o.append(sum(alpha1o))
         airbags1o.append(sum(airbags1o))
@@ -942,6 +1053,7 @@ def upload_bulk(request):
     file1 = pd.read_csv(meta, usecols=[0, 1, 2, 3, 4, 5],  encoding='latin1',  sep=',')
     file1.columns = ['business', 'filename', 'date', 'coord', 'bid', 'filetype']
     metaframe = pd.DataFrame(data=file1)
+    #print(metaframe)
     for j in metaframe.iterrows():
         bs = j[1]['business']
         fl = j[1]['filename']
@@ -1111,17 +1223,22 @@ def upload_bulk(request):
                                               fueltype=h[1]['fueltype'], bodystyle=h[1]['bodystyle'], classification=h[1]['classification'])
                 instance1.save()
 
+            #print("original vins inserted")
             df1 = df
             dfToList = df1['vin'].tolist()
+            #print("list created")
             #print(dfToList)
             url = "https://takatalive.com/api/takata/bulk"
             headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+            #print("data sent to star")
             r = requests.post(url, data=js.dumps(dfToList), headers=headers)
             p = r.json()
+            #print("response recieved")
             j = js.loads(p)
             #print(j)
             result = j['Result']
-
+            #print(result)
+            #print("results generated")
             resultdf = pd.DataFrame(
                 columns=['VehicleAirbagID', 'VehicleID', 'VIN', 'PRANum', 'Make', 'Model', 'Series', 'Year',
                          'AirbagLocation', 'IsAlpha', 'IsSubmitted'])
@@ -1267,16 +1384,10 @@ def zoho_sync(request):
     print(r)
 
     p = r.json()
-    #print(p)
-    #print('------------------------------------------------')
     a = p['code']
-    #print(a)
     b = p['details']
-    #print(b)
     c = b['userMessage']
-    #print(c)
     rec = len(c)
-    #rec = rec/2
     id = []
     bname = []
     for r in range(0,rec):
