@@ -14,6 +14,7 @@ urlpatterns = [
     path('files/bulk/', views.upload_bulk, name='upload_bulk'),
     path('report/1/', views.vins_located, name='vins-located'),
     path('report/2/', views.vins_make_consl, name='vins-make-consl'),
+    path('xgboost/results/', views.xgboost_results, name='xgboost-results'),
     #path('report/3/', views.vins_located_monthly, name='vins-located-monthly'),
 
 

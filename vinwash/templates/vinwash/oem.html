@@ -99,10 +99,7 @@
             </tbody>
         </table>
     </div>
-    <br><br>
-    <br><br>
-    <br><br>
-    <br><br>
+
     <div class="row">
       <div class="col">
         <h1>ALL MAKES DATA EXCLUDING SOLD</h1>
@@ -138,6 +135,103 @@
     <br><br>
     <br><br>
     <br><br>
+
+  <!-- -------------------------------washed data for OEM not sold --------------------------------- -->
+  {% if oem1_notsold %}
+        <div class="row">
+            <div class="col">
+                <h1>{{ name1 }} Washed Data - EXCLUDING SOLD</h1>
+            </div>
+         </div>
+        <div class="row">
+        <table id="" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>mm-yyyy</th>
+                    <th>Affected Vins</th>
+                    <th>Affected Airbags</th>
+                    <th>Affected Alpha</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for month, vins1, alpha1, airbags1 in oem1_notsold %}
+                    <tr>
+                        <td>{{ month.0 }} - {{ month.1 }} </td>
+                        <td>{{ vins1 }}</td>
+                        <td>{{ airbags1 }}</td>
+                        <td>{{ alpha1 }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+    {% if oem2_notsold %}
+        <div class="row">
+            <div class="col">
+                <h1>{{ name2 }} Washed Data - EXCLUDING SOLD</h1>
+            </div>
+         </div>
+        <div class="row">
+        <table id="" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>mm-yyyy</th>
+                    <th>Affected Vins</th>
+                    <th>Affected Airbags</th>
+                    <th>Affected Alpha</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for month, vins1, alpha1, airbags1 in oem2_notsold %}
+                    <tr>
+                        <td>{{ month.0 }} - {{ month.1 }} </td>
+                        <td>{{ vins1 }}</td>
+                        <td>{{ airbags1 }}</td>
+                        <td>{{ alpha1 }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        </div>
+    {% endif %}
+    {% if oem3_notsold %}
+        <div class="row">
+            <div class="col">
+                <h1>{{ name3 }} Washed Data - EXCLUDING SOLD</h1>
+            </div>
+         </div>
+        <div class="row">
+        <table id="" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>mm-yyyy</th>
+                    <th>Affected Vins</th>
+                    <th>Affected Airbags</th>
+                    <th>Affected Alpha</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for month, vins1, alpha1, airbags1 in oem3_notsold %}
+                    <tr>
+                        <td>{{ month.0 }} - {{ month.1 }} </td>
+                        <td>{{ vins1 }}</td>
+                        <td>{{ airbags1 }}</td>
+                        <td>{{ alpha1 }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        </div>
+    {% endif %}
+
+  <!-- -------------------------------washed data for OEM not sold --------------------------------- -->
 
 
 
@@ -242,6 +336,103 @@
   <br><br><br>
   <br><br><br>
   <br><br><br>
+  <!-- -------------------------------- STATE WISE EXCLUDING SOLD ------------------------ -->
+  {% if oem11_notsold %}
+        <div class="row">
+            <div class="col">
+                <h1>{{ name1 }} Data State Wise for 1 month - EXCLUDING SOLD</h1>
+            </div>
+         </div>
+        <div class="row">
+        <table id="" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>State</th>
+                    <th>Affected Vins</th>
+                    <th>Affected Airbags</th>
+                    <th>Affected Alpha</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for states, bgs, vns, alp in oem11_notsold %}
+                    <tr>
+                        <td>{{ states }} </td>
+                        <td>{{ vns }}</td>
+                        <td>{{ bgs }}</td>
+                        <td>{{ alp }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        </div>
+    {% endif %}
+
+  {% if oem22_notsold %}
+        <div class="row">
+            <div class="col">
+                <h1>{{ name2 }} Data State Wise for 1 month - EXCLUDING SOLD</h1>
+            </div>
+         </div>
+        <div class="row">
+        <table id="" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>State</th>
+                    <th>Affected Vins</th>
+                    <th>Affected Airbags</th>
+                    <th>Affected Alpha</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for states, bgs, vns, alp in oem22_notsold %}
+                    <tr>
+                        <td>{{ states }} </td>
+                        <td>{{ vns }}</td>
+                        <td>{{ bgs }}</td>
+                        <td>{{ alp }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        </div>
+    {% endif %}
+
+  {% if oem33_notsold %}
+        <div class="row">
+            <div class="col">
+                <h1>{{ name3 }} Data State Wise for 1 month - EXCLUDING SOLD</h1>
+            </div>
+         </div>
+        <div class="row">
+        <table id="" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>State</th>
+                    <th>Affected Vins</th>
+                    <th>Affected Airbags</th>
+                    <th>Affected Alpha</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for states, bgs, vns, alp in oem33_notsold %}
+                    <tr>
+                        <td>{{ states }} </td>
+                        <td>{{ vns }}</td>
+                        <td>{{ bgs }}</td>
+                        <td>{{ alp }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        </div>
+  {% endif %}
+  <!-- -------------------------------- STATE WISE EXCLUDING SOLD ------------------------ -->
   {% if oem11 %}
         <div class="row">
             <div class="col">
@@ -342,7 +533,101 @@
       <br><br>
       <br><br>
       <br><br>
+  <!-- -------------------------------- business wise not sold -------------------------- -->
+  {% if oem111_notsold %}
+        <div class="row">
+            <div class="col">
+                <h1>{{ name1 }} Business Wise Data for 1 month - EXCLUDES SOLD</h1>
+            </div>
+         </div>
+        <div class="row">
+        <table id="" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Business Name</th>
+                    <th>Affected Airbags</th>
+                    <th>Affected Vins</th>
+                    <th>Affected Alpha</th>
+                </tr>
+            </thead>
+            <tbody>
 
+                {% for biz, dfarb, dfvin, dfalp in oem111_notsold %}
+                    <tr>
+                        <td>{{ biz }} </td>
+                        <td>{{ dfarb }}</td>
+                        <td>{{ dfvin }}</td>
+                        <td>{{ dfalp }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        </div>
+  {% endif %}
+  {% if oem222_notsold %}
+        <div class="row">
+            <div class="col">
+                <h1>{{ name2 }} Business Wise Data for 1 month - EXCLUDES SOLD</h1>
+            </div>
+         </div>
+        <div class="row">
+        <table id="" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Business Name</th>
+                    <th>Affected Airbags</th>
+                    <th>Affected Vins</th>
+                    <th>Affected Alpha</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for biz, dfarb, dfvin, dfalp in oem222_notsold %}
+                    <tr>
+                        <td>{{ biz }} </td>
+                        <td>{{ dfarb }}</td>
+                        <td>{{ dfvin }}</td>
+                        <td>{{ dfalp }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        </div>
+  {% endif %}
+  {% if oem333_notsold %}
+        <div class="row">
+            <div class="col">
+                <h1>{{ name3 }} Business Wise Data for 1 month - EXCLUDES SOLD</h1>
+            </div>
+         </div>
+        <div class="row">
+        <table id="" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Business Name</th>
+                    <th>Affected Airbags</th>
+                    <th>Affected Vins</th>
+                    <th>Affected Alpha</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for biz, dfarb, dfvin, dfalp in oem333_notsold %}
+                    <tr>
+                        <td>{{ biz }} </td>
+                        <td>{{ dfarb }}</td>
+                        <td>{{ dfvin }}</td>
+                        <td>{{ dfalp }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        </div>
+  {% endif %}
+  <!-- -------------------------------- business wise not sold -------------------------- -->
   {% if oem111 %}
         <div class="row">
             <div class="col">

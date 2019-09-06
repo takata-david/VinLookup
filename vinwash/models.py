@@ -208,3 +208,11 @@ class original_extension(models.Model):
     classification = models.TextField(null=True)
 
 
+class results(models.Model):
+    threshold = models.TextField(null=True)
+    col1 = models.TextField(null=True)
+    col2 = models.TextField(null=True)
+    accuracy = models.TextField(null=True)
+    method = models.TextField(null=True)
+    dataset = models.TextField(null=True)
+    lossfunction = models.TextField(null=True)

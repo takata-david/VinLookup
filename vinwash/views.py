@@ -172,6 +172,56 @@ def washed_vins_bybusiness(oem):   # for current month
         return b
 
 
+def washed_vins_bybusiness_notsold(oem):   # for current month
+    now = datetime.datetime.now()
+    current_month = now.strftime('%m')
+    current_day = now.strftime('%d')
+    if int(current_day) > 25:
+        c_m = current_month
+    elif (int(current_day) > 0) & (int(current_day) < 25) & (int(current_month) > 1):
+        c_m = int(current_month)-1
+    else:
+        c_m = current_month
+
+    if len(str(c_m)) == 1:
+        c_m = '0'+str(c_m)
+
+    tf1 = pd.DataFrame(business.objects.values_list('id', 'state', 'bname'))
+    tf1.columns = ['business_id', 'state', 'bname']
+    #print(tf1)
+
+
+    tf2 = pd.DataFrame(vinfile.objects.values_list('id', 'business_id', 'date'))
+    if tf2.shape[0]>0:
+        tf2.columns = ['file_id', 'business_id', 'date']
+        #print(tf2)
+        df1 = pd.merge(tf2, tf1, on='business_id', how='outer')
+        df1 = df1[~df1['file_id'].isna()]
+        df1['file_id'] = df1.apply(lambda row: int(row.file_id), axis=1)
+        #print(df1)
+
+
+        a = washed_vins.objects.values('vin', 'file_id', 'isalpha').filter(make=oem).exclude(location='sold')
+        b = pd.DataFrame(a)
+        #print(b)
+        df2 = pd.merge(df1, b, on='file_id', how='outer')
+        df2 = df2[~df2['vin'].isna()]
+        df2['month'] = df2.apply(lambda row: row.date.strftime('%m'), axis=1)
+        df2['year'] = df2.apply(lambda row: row.date.strftime('%Y'), axis=1)
+        #print(df2)
+        df2 = df2[df2['month'] == str(c_m)]
+        df2 = df2[~df2['vin'].isna()]
+        #print(df2)
+        dfarb = df2
+        dfvin = df2.drop_duplicates(subset='vin', keep='first')
+        dfalp = df2[df2['isalpha'] == 'True']
+        #print(b)
+        return df2
+    else:
+        b = pd.DataFrame()
+        return b
+
+
 def washed_vins_data_bystate_byoem(oem):
     now = datetime.datetime.now()
     current_month = now.strftime('%m')
@@ -237,6 +287,71 @@ def washed_vins_data_bystate_byoem(oem):
     else:
         return [], [], [], []
 
+
+def washed_vins_data_bystate_byoem_notsold(oem):
+    now = datetime.datetime.now()
+    current_month = now.strftime('%m')
+    current_day = now.strftime('%d')
+    #print(current_day)
+    #print(current_month)
+    if int(current_day) > 25:
+        c_m = current_month
+    elif (int(current_day) > 0) & (int(current_day) < 25) & (int(current_month) > 1):
+        c_m = int(current_month)-1
+    else:
+        c_m = current_month
+
+    if len(str(c_m)) == 1:
+        c_m = '0'+str(c_m)
+    #print(c_m)
+    tf1 = pd.DataFrame(business.objects.values_list('id', 'state'))
+    tf1.columns = ['business_id', 'state']
+
+    tf2 = pd.DataFrame(vinfile.objects.values_list('id', 'business_id', 'date'))
+    if tf2.shape[0]>0:
+        tf2.columns = ['file_id', 'business_id', 'date']
+        #print(tf2)
+        df1 = pd.merge(tf2, tf1, on='business_id', how='outer')
+        df1 = df1[~df1['file_id'].isna()]
+        df1['file_id'] = df1.apply(lambda row: int(row.file_id), axis=1)
+
+        a = washed_vins.objects.values('vin', 'file_id', 'isalpha').filter(make=oem).exclude(location='sold')
+        b = pd.DataFrame(a)
+        #print(b)
+        df2 = pd.merge(df1, b, on='file_id', how='outer')
+
+        df2 = df2[~df2['vin'].isna()]
+        #print(df2)
+        df2['month'] = df2.apply(lambda row: row.date.strftime('%m'), axis=1)
+        df2['year'] = df2.apply(lambda row: row.date.strftime('%Y'), axis=1)
+
+        df2 = df2[df2['month'] == str(c_m)]
+
+        dfarb = df2
+        dfvin = df2.drop_duplicates(subset='vin', keep='first')
+        dfalp = df2[df2['isalpha'] == 'True']
+
+        #print(df2)
+
+        states = ['NT', 'VIC', 'QLD', 'NSW', 'SA', 'WA', 'TAS', 'ACT']
+        #data = []
+        bgs = []
+        vns = []
+        alp = []
+        for s in states:
+            bgs1 = dfarb[dfarb['state'] == s]
+            vns1 = dfvin[dfvin['state'] == s]
+            alp1 = dfalp[dfalp['state'] == s]
+            #z = df2[df2['state'] == s]
+            bgs.append(bgs1.shape[0])
+            vns.append(vns1.shape[0])
+            alp.append(alp1.shape[0])
+
+        #print(states)
+        #print(bgs, vns, alp)
+        return states, bgs, vns, alp
+    else:
+        return [], [], [], []
 
 
 def washed_vins_data_bymonth():
@@ -448,6 +563,51 @@ def washed_vins_data_bymonth_byoem(oem):
         return [], [], [], []
 
 
+def washed_vins_data_bymonth_byoem_notsold(oem):
+    months = months1()
+    table_frame = pd.DataFrame(vinfile.objects.values_list('id', 'business_id', 'date'))
+    if table_frame.shape[0] > 0:
+        table_frame.columns = ['file_id', 'business_id', 'date']
+        table_frame['month'] = table_frame.apply(lambda row: row.date.strftime('%m'), axis=1)
+        table_frame['year'] = table_frame.apply(lambda row: row.date.strftime('%Y'), axis=1)
+        a = washed_vins.objects.values('vin', 'file_id', 'isalpha').filter(make=oem).exclude(location='sold')
+        b = pd.DataFrame(a)
+        #print('washed vins')
+        #print('oem airbag count affected')
+        #print(b.shape)
+        df1 = pd.merge(table_frame, b, on='file_id', how='outer')
+        df1 = df1[~df1['vin'].isna()]
+        #print(df1)
+        #df1 = df1[df1['year'] == '2019']
+
+
+        dfx = df1
+        dfx = dfx.drop_duplicates(subset='vin', keep='first')
+        #print('unique vins')
+        #print(dfx.shape)
+        #print(dfx)
+        dfy = df1[df1['isalpha'] == 'True']
+        airbags1 = []
+        vins1 = []
+        alpha1 = []
+        period_size = len(months)
+        #print(period_size)
+        for m in months:
+            df2 = df1[(df1['month'] == m[0]) & (df1['year'] == m[1])]
+            df3 = dfx[(dfx['month'] == m[0]) & (dfx['year'] == m[1])]
+            df4 = dfy[(dfy['month'] == m[0]) & (dfy['year'] == m[1])]
+            airbags = int(df2.shape[0])
+            vins = int(df3.shape[0])
+            alpha = int(df4.shape[0])
+            airbags1.append(int(airbags))
+            vins1.append(int(vins))
+            alpha1.append(int(alpha))
+        return airbags1, alpha1, vins1, period_size
+    else:
+        return [], [], [], []
+
+
+
 @login_required
 def oem_report(request, oem):
     months = months1()
@@ -498,13 +658,30 @@ def oem_report(request, oem):
 
     # this is for particular oem
 
+    keyss_notsold = ['oem1_notsold', 'oem2_notsold', 'oem3_notsold']
     keyss = ['oem1', 'oem2', 'oem3']
     keyss1 = ['oem11', 'oem22', 'oem33']
+    keyss1_notsold = ['oem11_notsold', 'oem22_notsold', 'oem33_notsold']
     keyss11 = ['oem111', 'oem222', 'oem333']
+    keyss11_notsold = ['oem111_notsold', 'oem222_notsold', 'oem333_notsold']
     names = ['name1', 'name2', 'name3']
     i = 0
     for o in x:
         #print(o)
+        # ---------------------------------------------- by month by oem :: not sold ---------------------------------
+        airbags1o_notsold, alpha1o_notsold, vins1o_notsold, period_size1o_notsold \
+            = washed_vins_data_bymonth_byoem_notsold(o)  # for pecific oem
+        vins1o_notsold.append(sum(vins1o_notsold))
+        alpha1o_notsold.append(sum(alpha1o_notsold))
+        airbags1o_notsold.append(sum(airbags1o_notsold))
+
+        zipped_list1_notsold = zip(var, vins1o_notsold, alpha1o_notsold, airbags1o_notsold)
+        context.update({keyss_notsold[i]: zipped_list1_notsold})
+        # ---------------------------------------------- by month by oem :: not sold ---------------------------------
+
+
+
+
         airbags1o, alpha1o, vins1o, period_size1o = washed_vins_data_bymonth_byoem(o) # for pecific oem
         #print(vins1o)
         vins1o.append(sum(vins1o))
@@ -514,7 +691,19 @@ def oem_report(request, oem):
         zipped_list1 = zip(var, vins1o, alpha1o, airbags1o)
         context.update({keyss[i]: zipped_list1})
         context.update({names[i]: o})
-
+        # ------------------------------------------ by state by oem not SOLD ------------------------------
+        states_notsold, bgs_notsold, vns_notsold, alp_notsold = washed_vins_data_bystate_byoem_notsold(o)
+        ss_notsold = states_notsold + ['Total']
+        bgs_notsold.append(sum(bgs_notsold))
+        vns_notsold.append(sum(vns_notsold))
+        alp_notsold.append(sum(alp_notsold))
+        # print(ss)
+        # print(alp)
+        # print(vns)
+        # print(bgs)
+        zipped_list2_notsold = zip(ss_notsold, bgs_notsold, vns_notsold, alp_notsold)
+        context.update({keyss1_notsold[i]: zipped_list2_notsold})
+        # ------------------------------------------ by state by oem not SOLD ------------------------------
         # ---------------------------------------
         states, bgs, vns, alp = washed_vins_data_bystate_byoem(o)
         ss = states + ['Total']
@@ -529,6 +718,7 @@ def oem_report(request, oem):
         context.update({keyss1[i]: zipped_list2})
         # --------------------------------------- last section of report
         dfb = washed_vins_bybusiness(o)  # data frame business wise
+        dfb_notsold = washed_vins_bybusiness_notsold(o)  # data frame business wise
         if dfb.shape[0]>0:
             biz_df = dfb.drop_duplicates(subset='business_id', keep='first')
             bizid = biz_df['business_id'].tolist()
@@ -557,8 +747,37 @@ def oem_report(request, oem):
             dfalp.append(sum(dfalp))
             zipped_list_biz = zip(biznm, dfarb, dfvin, dfalp)
             context.update({keyss11[i]: zipped_list_biz})
-
             # --------------------------------------- last section of report
+            # ---------------------------------- NOT SOLD business wise ----------------------------------------
+            if dfb_notsold.shape[0] > 0:
+                biz_df_notsold = dfb_notsold.drop_duplicates(subset='business_id', keep='first')
+                bizid_notsold = biz_df_notsold['business_id'].tolist()
+                biznm_notsold = biz_df_notsold['bname'].tolist()
+                # print(biznm)
+                # print(bizid)
+                # print(biz_df)
+                dfarb_notsold = []
+                dfvin_notsold = []
+                dfalp_notsold = []
+
+                for bi_notsold in bizid_notsold:
+                    bhalu_notsold = dfb_notsold[dfb_notsold['business_id'] == bi_notsold]
+                    pass
+                    d_notsold = bhalu_notsold
+                    e_notsold = bhalu_notsold.drop_duplicates(subset='vin', keep='first')
+                    f_notsold = bhalu_notsold[bhalu_notsold['isalpha'] == 'True']
+
+                    dfarb_notsold.append(int(d_notsold.shape[0]))
+                    dfvin_notsold.append(int(e_notsold.shape[0]))
+                    dfalp_notsold.append(int(f_notsold.shape[0]))
+
+                biznm_notsold = biznm_notsold + ['Total']
+                dfarb_notsold.append(sum(dfarb_notsold))
+                dfvin_notsold.append(sum(dfvin_notsold))
+                dfalp_notsold.append(sum(dfalp_notsold))
+                zipped_list_biz_notsold = zip(biznm_notsold, dfarb_notsold, dfvin_notsold, dfalp_notsold)
+                context.update({keyss11_notsold[i]: zipped_list_biz_notsold})
+            # ---------------------------------- NOT SOLD business wise ----------------------------------------
 
             i = i + 1
 
@@ -1450,3 +1669,7 @@ def vin_lookup(request, vin):
             'notfound': 'Vin Not Found in business files'
         }
     return render(request, 'vinwash/vinlookup.html', context)
+
+
+def xgboost_results(request):
+    return render(request, 'vinwash/home.html')
