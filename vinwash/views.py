@@ -1670,6 +1670,50 @@ def vin_lookup(request, vin):
         }
     return render(request, 'vinwash/vinlookup.html', context)
 
+@login_required
+def consolidated_data(request):
+
+    OEM = ['BMW', 'Honda', 'Toyota', 'Lexus', 'Chrysler', 'Jeep', 'SAAB', 'Holden', 'Opel', 'Nissan', 'Mazda', 'Ford', 'Mitsubishi', 'Subaru', 'Mercedes-Benz']
+
+    resultdf = pd.DataFrame()
+    for o in OEM:
+        ol = '%%' + o + '%%'
+        locatedQuery = original_vins.objects.raw(
+            'select COUNT(a.wiki_id) as id from vinwash_original_vins a inner join vinwash_wiki_vincodes b on a.wiki_id = b.id where b.make like %s',
+            [ol])[0]
+        locatedVINs = locatedQuery.id
+
+        affectedQueryData = \
+        washed_vins.objects.raw('select COUNT(distinct vin) as id from vinwash_washed_vins where make = %s', [o])[0]
+        affectedVINs = affectedQueryData.id
+
+        totalAirbagsQuery = \
+        washed_vins.objects.raw('select COUNT(vin) as id from vinwash_washed_vins where make = %s', [o])[0]
+        totalAirbags = totalAirbagsQuery.id
+
+        alphaQuery = washed_vins.objects.raw(
+            'select COUNT(isalpha) as id from vinwash_washed_vins where make = %s and isalpha = \'True\'', [o])[0]
+        alpha = alphaQuery.id
+
+        resultdf = resultdf.append(
+            {'OEM': o, 'locatedVINs': locatedVINs, 'affectedVINs': affectedVINs, 'totalAirbags': totalAirbags,
+             'alpha': alpha}, ignore_index=True)
+
+    totalL = resultdf['locatedVINs'].sum()
+    totalA = resultdf['affectedVINs'].sum()
+    totalT = resultdf['totalAirbags'].sum()
+    totalAl = resultdf['alpha'].sum()
+
+    resultdf = resultdf.append({'OEM': 'VINs TOTAL', 'locatedVINs': totalL, 'affectedVINs': totalA, 'totalAirbags': totalT,
+             'alpha': totalAl}, ignore_index=True)
+
+    resultList = resultdf.values.tolist()
+
+    context = {
+        'result': resultList
+    }
+    return render(request, 'vinwash/consolidated.html', context)
+
 
 def xgboost_results(request):
     return render(request, 'vinwash/home.html')

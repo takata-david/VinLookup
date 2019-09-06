@@ -17,7 +17,7 @@ urlpatterns = [
     path('xgboost/results/', views.xgboost_results, name='xgboost-results'),
     #path('report/3/', views.vins_located_monthly, name='vins-located-monthly'),
 
-
+    path('report/consolidated/', views.consolidated_data, name='vins-consolidated'),
     path('report/<slug:oem>/', views.oem_report, name='oem-report'),
     path('report1/filecount/', views.file_count, name='file-count'),
     path('vinlookup/<slug:vin>/', views.vin_lookup, name='vin-lookup'),

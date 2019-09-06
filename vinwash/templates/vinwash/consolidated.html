@@ -1,0 +1,31 @@
+{% extends "users/base.html" %}
+{% block content1 %}
+<h1 class="display-4 text-white mt-5 mb-2">Consolidated data</h1>
+{% endblock content1 %}
+
+{% block content2 %}
+<table id="example" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>OEM</th>
+            <th>VINs Processed</th>
+            <th>Affected VINs</th>
+            <th>Total airbags</th>
+            <th>Alpha airbags</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if result %}
+            {% for c in result %}
+                <tr>
+                    <td>{{ c.0 }}</td>
+                    <td>{{ c.3 }}</td>
+                    <td>{{ c.1 }}</td>
+                    <td>{{ c.4 }}</td>
+                    <td>{{ c.2 }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>
+{% endblock content2 %}
