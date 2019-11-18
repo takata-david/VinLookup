@@ -1,7 +1,12 @@
-﻿business name from php application,validated_file_name : php application,dateofupload - php application,whogavemethefile- php application,Primary Key for busines,filetype
+﻿business name,filename,date,user,business_id,filetype
+abcd,ACM Parts_20190326_3.csv,26/03/2019,Peter,1535,electronic
+abcd,Brunswick Byron Auto Wreckers_20190408_1.csv,08/04/2019,Scott,60,manual
+abcd,Casula Auto Dismantlers_20190114_1.csv,14/01/2019,Dylan,1629,electronic
+abcd,Formula One Auto Spares_20190114_1.csv,14/01/2019,Dylan,422,electronic
+abcd,Jollys U Pull It_20190205_1.csv,05/02/2019,Scott,273,electronic
 abcd,A Part Motor Wreckers_20190402_1.csv,02/04/2019,Chris,347,electronic
 abcd,A Part Motor Wreckers_20190402_2.csv,02/04/2019,Chris,347,electronic
-abcd,A Part Motor Wreckers_20190423_3.csv,23/04/2019,Chris,347,electronic
+abcd,A Part Motor Wreckers_20190423_3.csv,23/04/2019,Chris,347,manual
 abcd,A1 Auto and Metal Recyclers_20190403_1.csv,03/04/2019,Dylan,490,electronic
 abcd,A1 Budget Auto Dismantlers_20190411_1.csv,11/04/2019,Dylan,1062,electronic
 abcd,Aarons Auto Parts Recyclers_20190701_1.csv,01/07/2019,Chris,1140,electronic
@@ -43,9 +48,9 @@ abcd,BM Parts and Services Pty Ltd_20190313_1.csv,13/03/2019,Scott,1198,electron
 abcd,BMs R Us_20190301_1.csv,01/03/2019,Scott,285,electronic
 abcd,Boondall Auto Recyclers_20181207_1.csv,07/12/2018,Scott,1506,electronic
 abcd,Boondall Auto Recyclers_20190404_2.csv,04/04/2019,Scott,1506,electronic
-abcd,Boondall Auto Recyclers_20190423_3.csv,23/04/2019,Chris,1506,electronic
+abcd,Boondall Auto Recyclers_20190423_3.csv,23/04/2019,Chris,1506,manual
 abcd,Boss Wrecking_20190402_1.csv,02/04/2019,Scott,589,electronic
-abcd,Boss Wrecking_20190408_2.csv,08/04/2019,Scott,589,electronic
+abcd,Boss Wrecking_20190408_2.csv,08/04/2019,Scott,589,manual
 abcd,Brisbane Car Parts and Car Removals_20190214_1.csv,14/02/2019,Scott,1533,electronic
 abcd,Brock Auto Parts_20190606_1.csv,06/06/2019,Dylan,290,electronic
 abcd,Budgewoi Auto Wreckers_20190503_1.csv,03/05/2019,Dylan,61,electronic
@@ -58,12 +63,12 @@ abcd,Camdale Auto Wreckers_20190228_1.csv,28/02/2019,Scott,226,electronic
 abcd,Camdale Auto Wreckers_20190704_3.csv,04/07/2019,Scott,226,electronic
 abcd,Capalaba Wreckers_20190114_1.csv,14/01/2019,Peter,1215,electronic
 abcd,Capalaba Wreckers_20190418_2.csv,18/04/2019,Scott,1215,electronic
-abcd,Cardiff Auto Wreckers_20190328_1.csv,01/04/2019,Dylan,63,electronic
-abcd,Cardiff Auto Wreckers_20190408_2.csv,08/04/2019,Dylan,63,electronic
-abcd,Caroline Springs Auto Wreckers_20190327_1.csv,27/03/2019,Scott,1498,electronic
+abcd,Cardiff Auto Wreckers_20190328_1.csv,01/04/2019,Dylan,63,manual
+abcd,Cardiff Auto Wreckers_20190408_2.csv,08/04/2019,Dylan,63,manual
+abcd,Caroline Springs Auto Wreckers_20190327_1.csv,27/03/2019,Scott,1498,manual
 abcd,Casula Auto Dismantlers_20190114_2.csv,14/01/2019,Dylan,1629,electronic
 abcd,Casula Auto Dismantlers_20190403_3.csv,03/04/2019,Dylan,1629,electronic
-abcd,Centenary Auto Wreckers_20190408_1.csv,08/04/2019,Scott,572,electronic
+abcd,Centenary Auto Wreckers_20190408_1.csv,08/04/2019,Scott,572,manual
 abcd,Central Coast 4 x 4 Wreckers_20190114_1.csv,14/01/2019,Dylan,468,electronic
 abcd,Central Coast European Dismantlers_20190503_1.csv,03/05/2019,Dylan,469,electronic
 abcd,Central Hills Auto Wreckers_20190618_1.csv,18/06/2019,Chris,1225,electronic
@@ -73,7 +78,7 @@ abcd,Chittaway Auto Dismantlers_20190704_1.csv,04/07/2019,Dylan,1227,electronic
 abcd,Christies Beach Auto Wreckers_20190520_1.csv,20/05/2019,Chris,205,electronic
 abcd,City Central Wrecking_20190107_1.csv,07/01/2019,Chris,1522,electronic
 abcd,City Dismantlers_20190517_1.csv,17/05/2019,Chris,209,electronic
-abcd,Cockburn Auto Wreckers_20190624_1.csv,24/06/2019,Chris,991,electronic
+abcd,Cockburn Auto Wreckers_20190624_1.csv,24/06/2019,Chris,991,manual
 abcd,Complete Auto Dismantlers_20190114_1.csv,14/01/2019,Chris,213,electronic
 abcd,Cooroy Auto Wreckers_20190305_1.csv,05/03/2019,Scott,154,electronic
 abcd,Cooroy Auto Wreckers_20190308_2.csv,08/03/2019,Scott,154,electronic
@@ -128,7 +133,7 @@ abcd,JCS Parts_20190418_1.csv,18/04/2019,Chris,712,electronic
 abcd,JCS Parts_20190418_2.csv,18/04/2019,Chris,712,electronic
 abcd,JCS Parts_20190418_3.csv,18/04/2019,Chris,712,electronic
 abcd,JCS Parts_20190418_4.csv,18/04/2019,Chris,712,electronic
-abcd,JMR Autos_20190624_1.csv,24/06/2019,Chris,1307,electronic
+abcd,JMR Autos_20190624_1.csv,24/06/2019,Chris,1307,manual
 abcd,Just Japanese Auto Recyclers_20190524_1.csv,24/05/2019,Scott,754,electronic
 abcd,Just Little Car Spares_20190712_1.csv,12/07/2019,Chris,721,electronic
 abcd,Kempsey Spares_20190725_1.csv,25/07/2019,Dylan,1076,electronic
@@ -139,7 +144,7 @@ abcd,Landsdale Motor Wreckers_20190510_1.csv,10/05/2019,Chris,968,electronic
 abcd,Landsdale Motor Wreckers_20190516_2.csv,16/05/2019,Chris,968,electronic
 abcd,Landsdale Motor Wreckers_20190701_3.csv,01/07/2019,Chris,968,electronic
 abcd,Logues Auto Wreckers_20190411_1.csv,11/04/2019,Scott,252,electronic
-abcd,M and I Spares_20190418_1.csv,18/04/2019,Dylan,1024,electronic
+abcd,M and I Spares_20190418_1.csv,18/04/2019,Dylan,1024,manual
 abcd,M and R Spare Parts_20190114_1.csv,14/01/2019,Dylan,1094,electronic
 abcd,Macarthur Auto Parts_20190510_1.csv,10/05/2019,Dylan,1031,electronic
 abcd,Machinery Drive Wreckers_20190618_1.csv,18/06/2019,Scott,1017,electronic
@@ -186,18 +191,18 @@ abcd,Perth A1_20190701_1.csv,01/07/2019,Chris,1381,electronic
 abcd,Perth Parts Solutions_20190527_1.csv,27/05/2019,Chris,357,electronic
 abcd,Pick N Payless Auto Parts_20190701_1.csv,01/07/2019,Dylan,37,electronic
 abcd,Pickles_20190510_1.csv,10/05/2019,Scott,1579,electronic
-abcd,Poly 4x4_20190331_1.csv,01/04/2019,Scott,869,electronic
+abcd,Poly 4x4_20190331_1.csv,01/04/2019,Scott,869,manual
 abcd,Port Stephens Auto Wreckers_20190322_1.csv,22/03/2019,Dylan,47,electronic
-abcd,Q1 Auto Parts_20190423_1.csv,23/04/2019,Dylan,1474,electronic
+abcd,Q1 Auto Parts_20190423_1.csv,23/04/2019,Dylan,1474,manual
 abcd,Rathmines Auto Dismantlers_20190530_1.csv,30/05/2019,Dylan,95,electronic
 abcd,River Murray Auto Wreckers Pty Ltd_20190318_1.csv,18/03/2019,Chris,212,electronic
 abcd,Road Tested Spares_20190114_1.csv,14/01/2019,Dylan,45,electronic
 abcd,SAAB SALVAGE_20190603_1.csv,03/06/2019,Dylan,97,electronic
 abcd,Salisury Auto Dismantlers_20190716_1.csv,16/07/2019,Chris,687,electronic
 abcd,Sandgate Wreckers_20190404_1.csv,04/04/2019,Scott,127,electronic
-abcd,Sandgate Wreckers_20190423_2.csv,23/04/2019,Scott,127,electronic
+abcd,Sandgate Wreckers_20190423_2.csv,23/04/2019,Scott,127,manual
 abcd,Scotts Parts Plus_20190603_1.csv,03/06/2019,Dylan,39,electronic
-abcd,Sells Auto Parts_20190408_1.csv,08/04/2019,Scott,1408,electronic
+abcd,Sells Auto Parts_20190408_1.csv,08/04/2019,Scott,1408,manual
 abcd,SGS Parts Plus - kurri kurri_20190503_1.csv,03/05/2019,Dylan,1520,electronic
 abcd,SGS Parts Plus - kurri kurri_20190704_2.csv,04/07/2019,Dylan,1520,electronic
 abcd,SGS Parts Plus - thornleigh_20190704_1.csv,04/07/2019,Dylan,1037,electronic
@@ -221,7 +226,7 @@ abcd,Toyospares_20190530_1.csv,30/05/2019,Scott,340,electronic
 abcd,Toyrolla Spares_20190510_1.csv,10/05/2019,Scott,292,electronic
 abcd,Ultimate Jap Spares_20190114_1.csv,14/01/2019,Dylan,107,electronic
 abcd,Underwood Wrecking_20181116_1.csv,16/11/2018,Scott,581,electronic
-abcd,Underwood Wrecking_20190331_2.csv,01/04/2019,Scott,581,electronic
+abcd,Underwood Wrecking_20190331_2.csv,01/04/2019,Scott,581,manual
 abcd,U-Pick Car Wreckers_20190314_1.csv,14/03/2019,Scott,1089,electronic
 abcd,Wagga Car Wreckers_20190517_1.csv,17/05/2019,Dylan,500,electronic
 abcd,Wanneroo 4 x 4 Dismantlers_20190516_1.csv,16/05/2019,Chris,1462,electronic
@@ -230,7 +235,7 @@ abcd,Westcoast Auto Wreckers_20190712_1.csv,12/07/2019,Chris,1049,electronic
 abcd,Westwide Auto Recyclers_20190412_1.csv,12/04/2019,Chris,352,electronic
 abcd,Wollongong Auto Parts_20190723_1.csv,14/03/2019,Dylan,16,electronic
 abcd,Woodville Auto Wreckers_20190314_1.csv,14/03/2019,Scott,1035,electronic
-abcd,Wrek King_20190327_3.csv,27/03/2019,Chris,1042,electronic
+abcd,Wrek King_20190327_3.csv,27/03/2019,Chris,1042,manual
 abcd,Wrek King_20190328_2.csv,28/03/2019,Chris,1042,electronic
 abcd,Wrek King_20190428_1.csv,28/03/2019,Chris,1042,electronic
 abcd,Wright Auto Wrecking_20190712_1.csv,12/07/2019,Chris,962,manual
@@ -252,4 +257,38 @@ abcd,Just Japanese Auto Recyclers_20190820_2.csv,20/08/2019,Dylan,754,electronic
 abcd,NQ Crash and 4WD Spares_20190820_2.csv,20/08/2019,Chris,1365,electronic
 abcd,Pickles_20190821_2.csv,21/08/2019,Dylan,1551,electronic
 abcd,Sydney Auto Dismantlers_20190820_1.csv,20/08/2019,Dylan,100,electronic
-abcd,S Twins Spares_20190830_1.csv,30/09/2019,Dylan,1636,electronic
+abcd,S Twins Spares_20190830_1.csv,30/08/2019,Dylan,1636,electronic
+abcd,A W A Wrecker.csv,09/09/2019,Chris,1483,manual
+abcd,All commercial Wreckers.csv,09/09/2019,Chris,1158,manual
+abcd,Babylon Wreckers.csv,11/09/2019,Chris,1608,manual
+abcd,Boulder Parts and Towing.csv,09/09/2019,Chris,1007,electronic
+abcd,Swan Auto.csv,09/09/2019,Chris,346,manual
+abcd,Universal Wreckers.csv,10/09/2019,Chris,1450,manual
+abcd,W A Auto Wrecker.csv,09/09/2019,Chris,1488,manual
+abcd,WOODVILLE-HONDA.csv,09/09/2019,Chris,1035,electronic
+abcd,iandm.csv,30/09/2019,Dylan,68,electronic
+abcd,complete1.csv,30/09/2019,Dylan,1620,electronic
+abcd,complete2.csv,30/09/2019,Dylan,1620,electronic
+abcd,complete3.csv,30/09/2019,Dylan,1620,electronic
+abcd,AIRR BAG JJ AUTO PARTS LANSVALE.csv,30/09/2019,Dylan,35,electronic
+abcd,MERREDIN PANELAND PAINT.csv,16/09/2019,Chris,1637,manual
+abcd,WA WARREN.csv,16/09/2019,Chris,1465,manual
+abcd,WA One stop Auto.csv,16/09/2019,Chris,1619,manual
+abcd,partington_4wd_unwashed.csv,06/09/2019,Chris,660,electronic
+abcd,ALL TERRAIN SPARES VINS.csv,15/10/2019,Chris,1638,manual
+abcd,Bathurst Auto Parts.csv,15/10/2019,Dylan,23,manual
+abcd,bbt jap parts-15-10-19.csv,15/10/2019,Dylan,46,electronic
+abcd,Cairns car wreckers.csv,15/10/2019,Chris,668,manual
+abcd,cardiff auto wreckers-15-10-19.csv,15/10/2019,Dylan,63,manual
+abcd,CityParts Zilmere QLD MVR.csv,21/10/2019,Chris,131,electronic
+abcd,Mitsiwreck.csv,15/10/2019,Chris,697,manual
+abcd,NARRANDERAWRECKERS2019EXCELL.csv,01/10/2019,Dylan,1071,electronic
+abcd,pickles vic.csv,15/10/2019,Dylan,1551,electronic
+abcd,Sumo Jap Spares.csv,15/10/2019,Dylan,99,manual
+abcd,pickles adelaide.csv,21/10/2019,Chris,1640,electronic
+abcd,Pickles Milperra.csv,11/10/2019,Dylan,1639,electronic
+abcd,Pickles Milperra 28.10.2019.csv,11/10/2019,Dylan,1639,electronic
+abd,pickles Milperra 28.10.2019a.csv,28/10/2019,Dylan,1639,electronic
+abcd,pickles canberra.csv,24/10/2019,Dylan,1641,electronic
+abd,PARADISE MERCEDES Final.csv,25/10/2019,Chris,207,electronic
+abd,pickles vic 29.10.18.csv,29/10/2019,Dylan,1551,electronic

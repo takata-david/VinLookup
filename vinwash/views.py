@@ -19,7 +19,8 @@ from . forms import vinfileForm
 import pandas as pd
 import json as js
 import requests
-from . models import washed_vins, original_vins, vin_conflicts, wiki_vincodes, business, original_extension
+from . models import washed_vins, original_vins, vin_conflicts, wiki_vincodes, business, original_extension, start_api, \
+    undertaking
 from araa import settings
 import io
 import datetime
@@ -267,7 +268,7 @@ def washed_vins_data_bystate_byoem(oem):
 
         #print(df2)
 
-        states = ['NT', 'VIC', 'QLD', 'NSW', 'SA', 'WA', 'TAS', 'ACT']
+        states = ['NT', 'VIC', 'QLD', 'NSW', 'SA', 'WA', 'TAS', 'ACT', 'NQLD']
         #data = []
         bgs = []
         vns = []
@@ -333,7 +334,7 @@ def washed_vins_data_bystate_byoem_notsold(oem):
 
         #print(df2)
 
-        states = ['NT', 'VIC', 'QLD', 'NSW', 'SA', 'WA', 'TAS', 'ACT']
+        states = ['NT', 'VIC', 'QLD', 'NSW', 'SA', 'WA', 'TAS', 'ACT', 'NQLD']
         #data = []
         bgs = []
         vns = []
@@ -704,7 +705,6 @@ def oem_report(request, oem):
         zipped_list2_notsold = zip(ss_notsold, bgs_notsold, vns_notsold, alp_notsold)
         context.update({keyss1_notsold[i]: zipped_list2_notsold})
         # ------------------------------------------ by state by oem not SOLD ------------------------------
-        # ---------------------------------------
         states, bgs, vns, alp = washed_vins_data_bystate_byoem(o)
         ss = states + ['Total']
         bgs.append(sum(bgs))
@@ -1193,6 +1193,204 @@ def undertaking_detailed_upload(request):
     pass
 
 
+def undertaking_upload(request):
+    url = "http://takataundertakings.com/getdetailedlist"
+    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+    r = requests.get(url, headers=headers)
+    p = r.json()
+    j = js.loads(p)
+    mm = 0
+    for i in j:
+         UndertakingSubmissionID = i['UndertakingSubmissionID']
+         VIN = i['VIN']
+         BarCode = i['BarCode']
+         AirbagLocation = i['AirbagLocation']
+         Make = i['Make']
+         Model = i['Model']
+         Series = i['Series']
+         Year = i['Year']
+         PRANum = i['PRANum']
+         IsAlpha = i['IsAlpha']
+         NotificationDate = i['NotificationDate']
+         NotifFirstName = i['NotifFirstName']
+         NotifLastName = i['NotifLastName']
+         FirstName = i['FirstName']
+         LastName = i['LastName']
+         CompanyID = i['CompanyID']
+         RecyclerABN = i['RecyclerABN']
+         CompanyName = i['CompanyName']
+         TradingName = i['TradingName']
+         Street = i['Street']
+         City = i['City']
+         StateCode = i['StateCode']
+         PostCode = i['PostCode']
+         Email = i['Email']
+         BusinessPhone = i['BusinessPhone']
+         Fax = i['Fax']
+         Website = i['Website']
+         Title = i['Title']
+         Phone = i['Phone']
+         ContactEmail = i['ContactEmail']
+         AccountName = i['AccountName']
+         BSB = i['BSB']
+         AccountNumber = i['AccountNumber']
+         Status = i['Status']
+         Condition = i['Condition']
+         LicenseDetail = i['LicenseDetail']
+         SellerCompanyName = i['SellerCompanyName']
+         SellerEmail = i['SellerEmail']
+         SellerPhone = i['SellerPhone']
+         SellerFName = i['SellerFName']
+         SellerLName = i['SellerLName']
+         SellerFullName = i['SellerFullName']
+         OwnerCompanyName = i['OwnerCompanyName']
+         OwnerEmail = i['OwnerEmail']
+         OwnerPhone = i['OwnerPhone']
+         OwnerFName = i['OwnerFName']
+         OwnerLName = i['OwnerLName']
+         OwnerFullName = i['OwnerFullName']
+         UploadedImageCount = i['UploadedImageCount']
+         DateOfSale = i['DateOfSale']
+         WriteOffTypeID = i['WriteOffTypeID']
+         WrittenOffType = i['WrittenOffType']
+         DateSigned = i['DateSigned']
+
+         instance = undertaking(accountName=AccountName, accountNumber=AccountNumber, airbagLocation=AirbagLocation,
+                                barcode=BarCode, bsb=BSB, businessPhone=BusinessPhone, city=City, companyID=CompanyID,
+                                companyName=CompanyName, condition=Condition, contactEmail=ContactEmail,
+                                dateOfSale=DateOfSale, dateSigned=DateSigned, email=Email, fax=Fax, firstName=FirstName,
+                                isAlpha=IsAlpha, lastName=LastName, licenseDetail=LicenseDetail, make=Make, model=Model,
+                                notifFirstName=NotifFirstName, notifLastName=NotifLastName,
+                                notificationDate=NotificationDate, ownerCompanyName=OwnerCompanyName,
+                                ownerEmail=OwnerEmail, ownerFName=OwnerFName, ownerFullName=OwnerFullName,
+                                ownerLName=OwnerLName, ownerPhone=OwnerPhone, phone=Phone, postCode=PostCode,
+                                praNum=PRANum, recyclerABN=RecyclerABN, sellerCompanyName=SellerCompanyName,
+                                sellerEmail=SellerEmail, sellerFName=SellerFName, sellerFullName=SellerFullName,
+                                sellerLName=SellerLName, sellerPhone=SellerPhone, series=Series, stateCode=StateCode,
+                                status=Status, street=Street, title=Title, tradingName=TradingName,
+                                uid=UndertakingSubmissionID, uploadedImageCount=UploadedImageCount, vin=VIN,
+                                website=Website, writeOffTypeID=WriteOffTypeID, writtenOffType=WrittenOffType, year=Year
+                                )
+         instance.save()
+
+         print(i['VIN'])
+         mm = mm + 1
+         #if mm == 10:
+            #break
+    return render(request, 'vinwash/upload_file.html')
+
+
+
+def add_star_id(request):
+    table_frame = pd.DataFrame(start_api.objects.values_list('vin','starid','airbaglocation'))
+    table_frame.columns = ['vin', 'starid', 'loc']
+    #print(table_frame)
+
+    mm = 0
+    for j in table_frame.iterrows():
+        vin = j[1]['vin']
+        print(mm,vin)
+        starid = j[1]['starid']
+        loc = j[1]['loc']
+        washed_vins.objects.filter(vin=vin).filter(airbaglocation=loc).update(starid=starid)
+        #if mm==10:
+            #break
+        mm = mm +1
+    return render(request, 'vinwash/upload_file.html')
+
+
+def add_taut_id(request):
+    table_frame = pd.DataFrame(undertaking.objects.values_list('vin', 'uid', 'airbagLocation'))
+    table_frame.columns = ['vin', 'uid', 'loc']
+    #print(table_frame)
+
+    mm = 0
+    for j in table_frame.iterrows():
+        vin = j[1]['vin']
+        print("'"+vin+"',")
+        uid = j[1]['uid']
+        loc = j[1]['loc']
+        washed_vins.objects.filter(vin=vin).filter(airbaglocation=loc).update(uid=uid)
+        #if mm==30:
+            #break
+        mm = mm +1
+    return render(request, 'vinwash/upload_file.html')
+
+
+# upload star id to vinwash table
+def star_upload(request):
+    url = "http://takatalive.com/getdetailedlist"
+    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+    r = requests.get(url, headers=headers)
+    p = r.json()
+    j = js.loads(p)
+    mm = 0
+    for i in j:
+        starid = i['StarSubmissionID']
+        vin = i['VIN']
+        bcode = i['BarCode']
+        driver = i['Driver']
+        passenger = i['Passenger']
+        loc = i['AirbagLocation']
+        make = i['Make']
+        model = i['Model']
+        series = i['Series']
+        year = i['Year']
+        pranum = i['PRANum']
+        isalpha = i['IsAlpha']
+        notdate = i['NotificationDate']
+        notfname = i['NotifFirstName']
+        notlname = i['NotifLastName']
+        fname = i['FirstName']
+        lname = i['LastName']
+        cid = i['CompanyID']
+        rabn = i['RecyclerABN']
+        cname = i['CompanyName']
+        tname = i['TradingName']
+        strt = i['Street']
+        city = i['City']
+        scode = i['StateCode']
+        pcode = i['PostCode']
+        email = i['Email']
+        bphone = i['BusinessPhone']
+        fax = i['Fax']
+        web = i['Website']
+        title = i['Title']
+        phone = i['Phone']
+        cemail = i['ContactEmail']
+        aname = i['AccountName']
+        bsb = i['BSB']
+        anumber = i['AccountNumber']
+        status = i['Status']
+        cond = i['Condition']
+        comp = i['Compensation']
+        ware = i['Warehouse']
+        courier = i['Courier']
+        invoice = i['RecyclerInvoiceStatus']
+        pstatus = i['OEMPaymentStatus']
+        imgcount = i['UploadedImageCount']
+        starstatus = i['StarStatus']
+        condalias = i['ConditionAlias']
+        datestring = i['SubmittedDateString']
+        compcur = i['CompensationInCurrency']
+        repcode = i['FieldRepCode']
+        print((mm + 1), i['VIN'])
+        mm = mm + 1
+        instance = start_api(starid=starid, vin=vin, barcode=bcode, driver=driver, passenger=passenger,airbaglocation=loc,
+                             make=make, model=model, series=series, year=year, pranum=pranum, isalpha=isalpha, notdate=notdate,
+                             notifierfname=notfname, notifierlname=notlname, fname=fname, lname=lname, cid=cid,
+                             abn=rabn, cname=cname, tradingname=tname, street=strt, city=city, state=scode, post=pcode,
+                             email=email, bphone=bphone, fax=fax, website=web, title=title, phone=phone, cemail=cemail,
+                             aname=aname, bsb=bsb, accnum=anumber, status=status,cond=cond, comp=comp, warehouse=ware,
+                             cour=courier, recycler_inv_stat=invoice, oem_pmt_stat=pstatus, up_imgcnt=imgcount, str_stat=starstatus,
+                             cond_alias=condalias, sub_date=datestring, comp_curn=compcur, field_repcode=repcode)
+        instance.save()
+        #if mm == 10:
+            #break
+    return render(request, 'vinwash/upload_file.html')
+
+
+
 @login_required
 def star_detailed_upload(request):
     meta = settings.MEDIA_ROOT + '\\' + 'star.csv'
@@ -1261,12 +1459,9 @@ def star_detailed_upload(request):
                 business.objects.filter(id=bid).update(bname=bnm, abn=abn, street=str, city=cty, state=stt, zip=pcd, email=bem,
                                                        phone=bph, fax=fax, fname=fnm, lname=lnm, account_name=anm, bsb=bsb,
                                                        account_number=ano)
-
-
     return render(request, 'vinwash/upload_file.html')
 
 #def upload_automated(request):
-@login_required
 def upload_bulk(request):
     meta = settings.MEDIA_ROOT + '\\' + 'filenames.csv'
     file1 = pd.read_csv(meta, usecols=[0, 1, 2, 3, 4, 5],  encoding='latin1',  sep=',')
@@ -1282,7 +1477,8 @@ def upload_bulk(request):
         #print(ftyp)
         filepath = settings.MEDIA_ROOT+'\\electronic\\' + str(fl)
         dt = j[1]['date']
-        #print(dt)
+        print(dt)
+
         dt = datetime.datetime.strptime(str(dt), "%d/%m/%Y").strftime("%Y-%m-%d")
         #print(dt)
         cr = str(j[1]['coord'])
@@ -1383,11 +1579,16 @@ def upload_bulk(request):
         #print(df)
 
         df = df.drop_duplicates(subset='vin', keep='first')
-
+        print(df)
         list1 = original_vins.objects.values_list('vin', flat=True)
         vin_list = list(list1)
         dup_vins = df[df['vin'].isin(vin_list)]  # duplicate b/w 2 files
-        dup_data = original_vins.objects.filter(vin__in=list(dup_vins['vin'])).values_list('vin', 'file_id')
+        print(list(dup_vins['vin']))
+        shinobi = list(dup_vins['vin'])
+
+        dup_data = original_vins.objects.filter(vin__in=str(shinobi)[1:-1]).values_list('vin', 'file_id')
+        #dup_data = original_vins.objects.raw('select vin, file_id from original_vins where vin in (shinobi)')
+        print(dup_data)
         recordid = fid
         if len(list(dup_vins['vin'])) > 0:
             for (vin, filid) in dup_data:
@@ -1418,7 +1619,7 @@ def upload_bulk(request):
                 if pd.isnull(img):
                     loc = ''
                 else:
-                    loc = img + '.' + ext
+                    loc = img
                 pre3 = vn[0:3]
                 pre2 = vn[0:2]
                 if pre2 in prefix_list:
@@ -1717,3 +1918,7 @@ def consolidated_data(request):
 
 def xgboost_results(request):
     return render(request, 'vinwash/home.html')
+
+
+def report_menu(request):
+    return render(request, 'vinwash/reports.html')
