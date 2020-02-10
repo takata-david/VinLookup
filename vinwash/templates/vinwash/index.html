@@ -1,0 +1,89 @@
+{% load static %}{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+  <head>
+    <title>VINLOOKUP</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="icon" href="/media/vinwash/araa.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,500,600,700,800,900,900i%7CRoboto:400">
+    <link rel="stylesheet" href="{% static 'vinwash/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'vinwash/css/fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'vinwash/css/style.css' %}">
+  </head>
+  <body>
+    <div class="preloader">
+      <div class="preloader-body">
+        <div class="cssload-container">
+          <div class="cssload-speeding-wheel"></div>
+        </div>
+        <p>Loading...</p>
+      </div>
+    </div>
+    <div class="page">
+      <!-- Page Header-->
+      <header class="section page-header">
+        <!-- RD Navbar-->
+        <div class="rd-navbar-wrap">
+          <nav class="rd-navbar rd-navbar-modern" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+            <div class="rd-navbar-main-outer">
+              <div class="rd-navbar-main">
+                <!-- RD Navbar Panel-->
+                <div class="rd-navbar-panel">
+                  <!-- RD Navbar Toggle-->
+                  <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+                  <!-- RD Navbar Brand-->
+                  <div class="rd-navbar-brand"><a href="http://autorecycle.com.au/"><img class="brand-logo-light" src="/media/vinwash/araa.png" alt="" /></a></div>
+                </div>
+                <div class="rd-navbar-main-element">
+                  <div class="rd-navbar-nav-wrap">
+                    <!-- RD Navbar Nav-->
+                    <ul class="rd-navbar-nav">
+                      <li class="rd-nav-item active"><a class="rd-nav-link" href="{% url 'vinwash-home' %}">HOME</a></li>
+                        {% if user.is_authenticated %}
+              <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'vindecoder' %}">VIN Lookup</a></li>
+                             <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+              <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'login' %}">Login</a></li>
+          {% endif %}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <section class="section section-lg-wave section-lg-custom section-main-bunner text-center">
+        <div class="main-bunner-img" style="background-image: url(/media/vinwash/bg-banner-1.jpg); background-size: cover;"></div>
+        <div class="main-bunner-inner">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 homescreen">
+                <br>
+                  <h2 style="font-size: 50px;">VINLOOKUP</h2>
+				  <h4>SALVAGE TAKATA AIRBAGS RECOVERY PROGRAM</h4>
+				  <h6><span class="fa fa-check-circle"></span> Check VIN details <span class="fa fa-check-circle"></span> Check STAR details <span class="fa fa-check-circle"></span> Check TAUT details</h6>
+				  <!--<div class="row-0">-->
+				  <!--</div>-->
+                  <!--<h3><b>CHECK VIN&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;STAR&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;TAUT</b></h3>
+				  <p><span>* Conditions Apply</span>-->
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Page Footer-->
+      <footer class="section footer-classic context-dark fixed-bottom"><p class="text-center">© 2020 Copyright ARAA  |  all rights reserved</p></footer>
+    </div>
+    <div class="snackbars" id="form-output-global"></div>
+    <script src="{% static 'vinwash/js/core.min.js' %}"></script>
+    <script src="{% static 'vinwash/js/script.js' %}"></script>
+
+  </body>
+</html>
