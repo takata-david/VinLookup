@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -80,10 +81,10 @@ WSGI_APPLICATION = 'araa.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'takata_dev_db',
-        'HOST': 'LAPTOP-HFCHUMLM',
+        'NAME': '04Feb',
+        'HOST': 'devdjango.database.windows.net',
         'USER': 'takata_prafull',
-        'PASSWORD': 'Takata001',
+        'PASSWORD': 'Vinwash001',
         'OPTIONS': {
             'provider': 'SQLOLEDB',
             'driver': 'ODBC Driver 17 for SQL Server',

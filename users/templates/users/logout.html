@@ -1,10 +1,92 @@
-{% extends "users/base.html" %}
-{% block content2 %}
-     <h2>You have been logged out</h2>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-            <a href="{% url 'login' %}">Log In Again</a>
-        </small>
+{% load static %}
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+  <head>
+    <title>vinwash VEHICLES RECOVERY & SALVAGE PROGRAM</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="icon" href="/media/vinwash/araa.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,500,600,700,800,900,900i%7CRoboto:400">
+    <link rel="stylesheet" href="{% static 'vinwash/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'vinwash/css/fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'vinwash/css/style.css' %}">
+  </head>
+  <body>
+    <div class="preloader">
+      <div class="preloader-body">
+        <div class="cssload-container">
+          <div class="cssload-speeding-wheel"></div>
+        </div>
+        <p>Loading...</p>
+      </div>
     </div>
+    <div class="page">
+      <!-- Page Header-->
+      <header class="section page-header">
+        <!-- RD Navbar-->
+        <div class="rd-navbar-wrap">
+          <nav class="rd-navbar rd-navbar-modern" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+            <div class="rd-navbar-main-outer">
+              <div class="rd-navbar-main">
+                <!-- RD Navbar Panel-->
+                <div class="rd-navbar-panel">
+                  <!-- RD Navbar Toggle-->
+                  <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+                  <!-- RD Navbar Brand-->
+                  <div class="rd-navbar-brand"><a href="http://autorecycle.com.au/"><img class="brand-logo-light" src="/media/vinwash/araa.png" alt="" /></a></div>
+                </div>
+                <div class="rd-navbar-main-element">
+                  <div class="rd-navbar-nav-wrap">
+                    <!-- RD Navbar Nav-->
+                    <ul class="rd-navbar-nav">
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'vinwash-home' %}">Home</a></li>
+                        <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'login' %}">Login</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
 
-{% endblock content2 %}
+      <section class="parallax-container" data-parallax-img="/media/vinwash/icon-lists-title-bg.jpg">
+        <div class="breadcrumbs-custom context-dark">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-12 col-lg-9">
+                <h2 style="color: #1b9a08">VINLOOKUP</h2><br><br>
+                  <!--<h3 style="color: yellow; font-size: 40px"><b><u>AUTOMOTIVE RECYCLER APPLICATION TO PARTICIPATE</u></b></h3>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+		<section class="section section-lg bg-default">
+        <div class="container">
+          <div class="row-30">
+            <div class="col-lg-12" align="center">
+                <h2>You have been logout.</h2><br><br>
+                <h2 style="color: #ba2121">
+                    To look up further: <a href="{% url 'login' %}" style="color: #02a8da">Log In</a>
+                </h2>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+
+      <!-- Page Footer-->
+      <footer class="section footer-classic context-dark"><p class="text-center">© 2020 Copyright ARAA  |  all rights reserved</p></footer>
+    </div>
+    <div class="snackbars" id="form-output-global"></div>
+     <script src="{% static 'vinwash/js/core.min.js' %}"></script>
+    <script src="{% static 'vinwash/js/script.js' %}"></script>
+
+  </body>
+</html>

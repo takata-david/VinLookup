@@ -1,84 +1,394 @@
-{% extends "users/base.html" %}
-{% block content1 %}
-<h1 class="display-4 text-white mt-5 mb-2">Vins Lookup</h1>
-{% endblock content1 %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+  <head>
+    <title>About the program</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="icon" href="/media/vinwash/araa.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,500,600,700,800,900,900i%7CRoboto:400">
+    <link rel="stylesheet" href="{% static 'vinwash/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'vinwash/css/fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'vinwash/css/style.css' %}">
+  </head>
+
+<body>
+    <div class="preloader">
+      <div class="preloader-body">
+        <div class="cssload-container">
+          <div class="cssload-speeding-wheel"></div>
+        </div>
+        <p>Loading...</p>
+      </div>
+    </div>
+    <div class="page">
+      <!-- Page Header-->
+      <header class="section page-header">
+        <!-- RD Navbar-->
+        <div class="rd-navbar-wrap">
+          <nav class="rd-navbar rd-navbar-modern" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+            <div class="rd-navbar-main-outer">
+              <div class="rd-navbar-main">
+                <!-- RD Navbar Panel-->
+                <div class="rd-navbar-panel">
+                  <!-- RD Navbar Toggle-->
+                  <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+                  <!-- RD Navbar Brand-->
+                  <div class="rd-navbar-brand"><a href="http://autorecycle.com.au/"><img class="brand-logo-light" src="/media/vinwash/araa.png" alt="" /></a></div>
+                </div>
+                <div class="rd-navbar-main-element">
+                  <div class="rd-navbar-nav-wrap">
+                    <!-- RD Navbar Nav-->
+                    <ul class="rd-navbar-nav">
+           <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'vinwash-home' %}">HOME</a></li>
+                    <li class="rd-nav-item active"><a class="rd-nav-link" href="{% url 'vindecoder' %}">VIN Lookup</a></li>
+
+          {% if user.is_authenticated %}
+              <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+              <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'login' %}">Login</a></li>
+          {% endif %}
+       </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+    <section class="parallax-container" data-parallax-img="/media/vinwash/icon-lists-title-bg.jpg">
+        <div class="breadcrumbs-custom context-dark">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-12 col-lg-9">
+                <h2 class="breadcrumbs-custom-title" style="color: #1b9a08">VINLOOKUP</h2>
+                <ul class="breadcrumbs-custom-path">
+                  <!--<li><a href="index.html">Home</a></li>
+                  <li class="active">About Us</li>-->
+                     <form action="" method="POST" enctype="multipart/form-data">
+          <div class="row justify-content-md-center">
+            {% csrf_token %}
+                {{ form.your_vin | add_class:"form-control col-6"  }}
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit" >Search</button>
+            </div>
+          </div>
+          </form>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+    <!-- Page Features -->
+
+<section class="section section-lg bg-default">
+        <div class="container">
+          <div class="row-30">
+            <div class="col-lg-12">
+		<div class="row">
+		  <div style="border: 0px solid red;"  class="col-8">
+		  <br>
+          {% if vals %}
+              <table class="table table-bordered">
+			  <thead class="thead-dark">
+				<tr>
+				  <th scope="col">#</th>
+				  <th scope="col">Original Data</th>
+				  <th scope="col">Value</th>
+				</tr>
+			  </thead>
+			  <tbody>
+                {% if vals %}
+                    <!--
+                    <tr>
+                        <td>1</td>
+                        <td>Image</td>
+                        <td><a target="_blank" href="../../../media/{{ folder }}/{{ vals.0 }}/{{ vals.3 }}">{{ vals.3 }}</a></td>
+                    </tr>
+                    -->
+                    <tr>
+                        <td>1</td>
+                        <td>Stock #</td>
+                        <td>{{ vals.5 }}</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Location</td>
+                        <td>{{ vals.4 }}</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Business</td>
+                        <td>{{ biz.0 }}</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>State</td>
+                        <td>{{ biz.1 }}</td>
+                    </tr>
+                {% endif %}
+
+			  </tbody>
+			  </table>
+          {% endif %}
+          {% if elec %}
+              <table class="table table-bordered">
+			  <thead class="thead-dark">
+				<tr>
+				  <th scope="col">#</th>
+				  <th scope="col">Original Data</th>
+				  <th scope="col">Value</th>
+				</tr>
+			  </thead>
+			  <tbody>
+                {% if vals1 %}
+                    <!--
+                    <tr>
+                        <td>1</td>
+                        <td>File</td>
+                        <td><a href="../../../media/electronic/{{ elec }}">File</a></td>
+                    </tr>
+                    -->
+                    <tr>
+                        <td>1</td>
+                        <td>Stock #</td>
+                        <td>{{ vals1.5 }}</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Location</td>
+                        <td>{{ vals1.4 }}</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Business</td>
+                        <td>{{ biz.0 }}</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>State</td>
+                        <td>{{ biz.1 }}</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Filename</td>
+                        <td>{{ elec }}</td>
+                    </tr>
+                {% endif %}
+
+			  </tbody>
+			  </table>
+          {% endif %}
+
+
+          {% if wv_vals %}
+            <!-- add class 'table' for padding in table columns -->
+
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th width="30%">Washed Data</th>
+                        <th width="70%">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td>Make</td>
+                            <td>{{ wv_vals.1 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Model</td>
+                            <td>{{ wv_vals.2 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Series</td>
+                            <td>{{ wv_vals.3 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Year</td>
+                            <td>{{ wv_vals.4 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Side</td>
+                            <td>{{ wv_vals.5 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Alpha</td>
+                            <td>{{ wv_vals.6 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Vehicle Id</td>
+                            <td>{{ wv_vals.0 }}</td>
+                        </tr>
+                </tbody>
+            </table>
+                <br>
+
+          {% endif %}
+          {% if st_vals %}
+            <!-- add class 'table' for padding in table columns -->
+
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th width="30%">Star Data</th>
+                        <th width="70%">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td>Star#</td>
+                            <td>{{ st_vals.0 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Barcode</td>
+                            <td>{{ st_vals.1 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Praf Num</td>
+                            <td>{{ st_vals.2 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Notifier First Name</td>
+                            <td>{{ st_vals.3 }}</td>
+                        </tr>
+                        <tr>
+                            <td>ABN</td>
+                            <td>{{ st_vals.4 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Company Name</td>
+                            <td>{{ st_vals.5 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>{{ st_vals.6 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Business Phone</td>
+                            <td>{{ st_vals.7 }}</td>
+                        </tr>
+                </tbody>
+            </table>
+                <br>
+
+          {% endif %}
+          {% if ut_vals %}
+            <!-- add class 'table' for padding in table columns -->
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th width="30%">TAUT Data</th>
+                        <th width="70%">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td>Company Name</td>
+                            <td>{{ ut_vals.8 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Date of Sale</td>
+                            <td>{{ ut_vals.1 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Date Signed</td>
+                            <td>{{ ut_vals.2 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>{{ ut_vals.3 }}</td>
+                        </tr>
+                        <tr>
+                            <td>License Detail</td>
+                            <td>{{ ut_vals.4 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Notification Date</td>
+                            <td>{{ ut_vals.5 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td>{{ ut_vals.6 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Seller Phone</td>
+                            <td>{{ ut_vals.7 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Condition</td>
+                            <td>{{ ut_vals.0 }}</td>
+                        </tr>
+                </tbody>
+            </table>
+                <br>
+          {% endif %}
+
+          {% if zh_vals %}
+            <!-- add class 'table' for padding in table columns -->
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th width="30%">Zoho Data</th>
+                        <th width="70%">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for c in zh_vals %}
+                            <tr>
+                                <td>Timestamp for call</td>
+                                <td>{{ c }}</td>
+                            </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+            <br>
+          {% endif %}
+          {% if notfound %}
+          {% endif %}
+
+
+		  </div>
+		  <div style="border: 0px solid red;"  class="col-4">
+			<div class="container bg-warning" style="margin-top: 26px; border: solid; background: yellow">
+			  <!-- Content here -->
+			  <br>
+              {% if vin %}
+                  <h4 class=" text-center">Showing results for: </h4>
+                  <h4 class=" text-center"><u>{{ vin }}</u></h4>
+
+              {% endif %}
+			  <br>
+			  <br>
+			</div>
+
+		  </div>
+		</div>
+
+            </div>
+          </div>
+        </div>
+      </section>
 
 
 
-{% block content2 %}
-{% if notfound %}
-    This vin does not exist in our data base.
-{% endif %}
-{% if vals %}
-<table id="example" class="table table-striped table-bordered" style="width:100%">
-    <thead>
-        <tr>
-             <th>Attribute</th>
-            <th>Value</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% if vals %}
-            <tr>
-                <td>Image</td>
-                <td><a target="_blank" href="../../../media/{{ folder }}/{{ vals.0 }}/{{ vals.3 }}">{{ vals.3 }}</a></td>
-            </tr>
-            <tr>
-                <td>Stock #</td>
-                <td>{{ vals.5 }}</td>
-            </tr>
-            <tr>
-                <td>Location</td>
-                <td>{{ vals.4 }}</td>
-            </tr>
-            <tr>
-                <td>Business</td>
-                <td>{{ biz.0 }}</td>
-            </tr>
-            <tr>
-                <td>State</td>
-                <td>{{ biz.1 }}</td>
-            </tr>
-        {% endif %}
-    </tbody>
-</table>
-{% endif %}
-{% if elec %}
-<table id="example" class="table table-striped table-bordered" style="width:100%">
-    <thead>
-        <tr>
-            <th>Attribute</th>
-            <th>Value</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% if vals1 %}
-            <tr>
-                <td>File</td>
-                <td><a href="../../../media/electronic/{{ elec }}">File</a></td>
-            </tr>
-            <tr>
-                <td>Stock #</td>
-                <td>{{ vals1.5 }}</td>
-            </tr>
-            <tr>
-                <td>Location</td>
-                <td>{{ vals1.4 }}</td>
-            </tr>
-            <tr>
-                <td>Business</td>
-                <td>{{ biz.0 }}</td>
-            </tr>
-            <tr>
-                <td>State</td>
-                <td>{{ biz.1 }}</td>
-            </tr>
-            <tr>
-                <td>Filename</td>
-                <td>{{ elec }}</td>
-            </tr>
-        {% endif %}
-    </tbody>
-</table>
-{% endif %}
-{% endblock content2 %}
+
+
+
+    <!-- /.row -->
+
+  <footer class="section footer-classic context-dark"><p class="text-center">© 2020 Copyright ARAA  |  all rights reserved</p></footer>
+    </div>
+    <div class="snackbars" id="form-output-global"></div>
+     <script src="{% static 'vinwash/js/core.min.js' %}"></script>
+    <script src="{% static 'vinwash/js/script.js' %}"></script>
+
+  </body>
+</html>

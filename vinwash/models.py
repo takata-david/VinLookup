@@ -22,6 +22,7 @@ class business(models.Model):
     bsb = models.CharField(max_length=15, null=True)
     account_number = models.CharField(max_length=15, null=True)
     notes = models.TextField(null=True)
+    courier = models.TextField(null=True)
 
     def __str__(self):
         return '{} at {}'.format(self.bname, self.street)
@@ -37,6 +38,7 @@ class vinfile(models.Model):
     user = models.CharField(max_length=100, null=True)
     notes = models.TextField(null=True)
     business = models.ForeignKey(business, on_delete=models.PROTECT)
+    #business = models.TextField(null=True)
     filetype = models.CharField(max_length=25, null=True)
     #business = models.CharField(max_length=250)
 
@@ -307,3 +309,46 @@ class mapping(models.Model):
     tauttn = models.TextField(null=True)
     hondabn = models.TextField(null=True)
     hondatn = models.TextField(null=True)
+
+
+class zoho_sync_day1(models.Model):
+    bname = models.TextField(null=True)
+    bid = models.TextField(null=True)
+
+class zoho_sync_day2(models.Model):
+    bname = models.TextField(null=True)
+
+class zoho_sync_day3(models.Model):
+    bname = models.TextField(null=True)
+
+
+class zoho_sync_log(models.Model):
+    day = models.TextField(null=True)
+    date = models.TextField(null=True)
+
+
+class zoho_calls(models.Model):
+    call_duration = models.TextField(null=True)
+    description = models.TextField(null=True)
+    call_status = models.TextField(null=True)
+    call_start_time = models.TextField(null=True)
+    billable = models.TextField(null=True)
+    subject = models.TextField(null=True)
+    call_type = models.TextField(null=True)
+    call_result = models.TextField(null=True)
+    what_id_name = models.TextField(null=True)
+    what_id_id = models.TextField(null=True)
+    call_duration_in_seconds = models.TextField(null=True)
+    tag = models.TextField(null=True)
+
+class honda_file(models.Model):
+    honda_name = models.TextField(null=True)
+    honda_address = models.TextField(null=True)
+    zoho_business_name = models.TextField(null=True)
+    zoho_trading_name = models.TextField(null=True)
+    zoho_street = models.TextField(null=True)
+    zoho_city = models.TextField(null=True)
+    zoho_zipcode = models.TextField(null=True)
+    zoho_state = models.TextField(null=True)
+    account_lead = models.TextField(null=True)
+    remark = models.TextField(null=True)

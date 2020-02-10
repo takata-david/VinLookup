@@ -1,75 +1,49 @@
 {% load static %}
-<html lang="en">
-
-<head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>ARAA Home Page</title>
-
-  <!-- This one came with template:: Bootstrap core CSS -->
-  <link href="{% static 'vinwash/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
-
-  <!-- This one came with template:: Custom styles for this template -->
-  <link rel="stylesheet" href="{% static 'vinwash/business-frontpage.css' %}" type="text/css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" type="text/css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" type="text/css">
-
-
-   <!-- This one is for progress bar -->
-   <style>
-    #myProgress {
-      width: 100%;
-      background-color: #ddd;
-    }
-
-    #myBar {
-      width: 10%;
-      height: 30px;
-      background-color: #4CAF50;
-      text-align: center; /* To center it horizontally (if you want) */
-      line-height: 30px; /* To center it vertically */
-      color: white;
-    }
-  </style>
-  <!-- this one is for highcharts -->
-  <style type="text/css">
-		#container {
-			min-width: 310px;
-			max-width: 800px;
-			height: 400px;
-			margin: 0 auto
-		}
-  </style>
-</head>
-
-<body>
-
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="{% url 'vinwash-home' %}">Takata Recall</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 'vinwash-home' %}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Reports</a>
-          </li>
-
-          {% if user.is_authenticated %}
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+  <head>
+    <title>vinwash VEHICLES RECOVERY & SALVAGE PROGRAM</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="icon" href="/media/vinwash/araa.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,500,600,700,800,900,900i%7CRoboto:400">
+    <link rel="stylesheet" href="{% static 'vinwash/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'vinwash/css/fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'vinwash/css/style.css' %}">
+  </head>
+  <body>
+    <div class="preloader">
+      <div class="preloader-body">
+        <div class="cssload-container">
+          <div class="cssload-speeding-wheel"></div>
+        </div>
+        <p>Loading...</p>
+      </div>
+    </div>
+    <div class="page">
+      <!-- Page Header-->
+      <header class="section page-header">
+        <!-- RD Navbar-->
+        <div class="rd-navbar-wrap">
+          <nav class="rd-navbar rd-navbar-modern" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+            <div class="rd-navbar-main-outer">
+              <div class="rd-navbar-main">
+                <!-- RD Navbar Panel-->
+                <div class="rd-navbar-panel">
+                  <!-- RD Navbar Toggle-->
+                  <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+                  <!-- RD Navbar Brand-->
+                  <div class="rd-navbar-brand"><a href="http://autorecycle.com.au/"><img class="brand-logo-light" src="/media/vinwash/araa.png" alt="" /></a></div>
+                </div>
+                <div class="rd-navbar-main-element">
+                  <div class="rd-navbar-nav-wrap">
+                    <!-- RD Navbar Nav-->
+                    <ul class="rd-navbar-nav">
+                      <li class="rd-nav-item active"><a class="rd-nav-link" href="{% url 'vinwash-home' %}">Home</a></li>
+                        {% if user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                <a class="nav-link" href="{% url 'vindecoder' %}">Vindecoder</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
@@ -78,346 +52,48 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'login' %}">Login</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'register' %}">Register</a>
-              </li>
           {% endif %}
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Header -->
-  <header class="bg-primary py-5 mb-5">
-    <div class="container h-25">
-      <div class="row h-100 align-items-center">
-        <div class="col-lg-12">
-            {% block content1 %}{% endblock %}
-          <p class="lead mb-5 text-white-50"></p>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
         </div>
-      </div>
+      </header>
+
+      <section class="parallax-container" data-parallax-img="/media/vinwash/icon-lists-title-bg.jpg">
+        <div class="breadcrumbs-custom context-dark">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-12 col-lg-9">
+                <h2 style="color: #1b9a08">VINLOOKUP</h2><br><br>
+                  <!--<h3 style="color: yellow; font-size: 40px"><b><u>AUTOMOTIVE RECYCLER APPLICATION TO PARTICIPATE</u></b></h3>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+		<section class="section section-lg bg-default">
+        <div class="container">
+          <div class="row-30">
+            <div class="col-lg-12" align="center">
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+      <!-- Page Footer-->
+      <footer class="section footer-classic context-dark"><p class="text-center">© 2020 Copyright ARAA  |  all rights reserved</p></footer>
     </div>
-  </header>
+    <div class="snackbars" id="form-output-global"></div>
+     <script src="{% static 'vinwash/js/core.min.js' %}"></script>
+    <script src="{% static 'vinwash/js/script.js' %}"></script>
 
-  <!-- Page Content -->
-  <div class="container">
-    {% block content2 %}
-
-    {% endblock %}
-    <!-- /.row -->
-  </div>
-  <!-- /.container -->
-
-  <!-- Footer -->
-  <footer class="py-5 bg-dark">
-    <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
-    </div>
-    <!-- /.container -->
-  </footer>
-
-  <!-- Bootstrap core JavaScript -->
-  <script src="{% static 'vinwash/jquery.min.js' %}"></script>
-  <script src="{% static 'vinwash/bootstrap.bundle.min.js' %}"></script>
-
-  <!-- this js for progress bar -->
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-  <script>
-  $("#myid").ready(function(){
-      var elem = document.getElementById("myBar");
-      var width = 10;
-      var id = setInterval(frame, 40);
-      function frame() {
-        if (width >= 100) {
-          clearInterval(id);
-        } else {
-          width++;
-          elem.style.width = width + '%';
-          elem.innerHTML = width * 1 + '%';
-          if (width > 10 && width < 20) {
-              document.getElementById("test").innerHTML = "Saving File to Repository!";
-          }
-          if (width > 30 && width < 40) {
-              document.getElementById("test").innerHTML = "Removing in File and between File duplicates!";
-          }
-          if (width > 50 && width < 60) {
-              document.getElementById("test").innerHTML = "Saving original and washed vins!";
-          }
-          if (width > 70 && width < 80) {
-              document.getElementById("test").innerHTML = "Saving duplicate conflict!";
-          }
-          if (width > 90 && width < 100) {
-              document.getElementById("test").innerHTML = "DONE";
-          }
-
-
-        }
-      }
-  })
-  </script>
-  <script src="{% static 'vinwash/highchart/export-data.js' %}"></script>
-  <script src="{% static 'vinwash/highchart/exporting.js' %}"></script>
-  <script src="{% static 'vinwash/highchart/highcharts.js' %}"></script>
-  <script src="{% static 'vinwash/highchart/series-label.js' %}"></script>
-
-  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-  <script type="text/javascript">
-      $(document).ready(function() {
-        $('#example').DataTable();
-      } );
-  </script>
-  <script type="text/javascript">
-    Highcharts.chart('container', {
-
-        title: {
-            text: 'State wise vin located!!'
-        },
-
-        subtitle: {
-            text: 'Source: vinwashing system'
-        },
-
-        yAxis: {
-            title: {
-                text: 'States'
-            }
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle'
-        },
-
-        plotOptions: {
-            series: {
-                label: {
-                    connectorAllowed: false
-                },
-                pointStart: 2010
-            }
-        },
-
-        series: [{
-            name: 'Victoria',
-            data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-        }, {
-            name: 'Queensland',
-            data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-        }, {
-            name: 'Northern Territory',
-            data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-        }, {
-            name: 'New South Wales',
-            data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-        }, {
-            name: 'South Australia',
-            data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
-        }],
-
-        responsive: {
-            rules: [{
-                condition: {
-                    maxWidth: 500
-                },
-                chartOptions: {
-                    legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'bottom'
-                    }
-                }
-            }]
-        }
-
-    });
-  </script>
-  <script type="text/javascript">
-    Highcharts.chart('container1', {
-        chart: {
-            type: 'area'
-        },
-        title: {
-            text: 'Affected Airbags State wise'
-        },
-        subtitle: {
-            text: 'Source: vinwashing system'
-        },
-        xAxis: {
-            categories: ['1750', '1800', '1850', '1900', '1950', '1999', '2050'],
-            tickmarkPlacement: 'on',
-            title: {
-                enabled: false
-            }
-        },
-        yAxis: {
-            title: {
-                text: 'Percent'
-            }
-        },
-        tooltip: {
-            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b> ({point.y:,.0f} millions)<br/>',
-            split: true
-        },
-        plotOptions: {
-            area: {
-                stacking: 'percent',
-                lineColor: '#ffffff',
-                lineWidth: 1,
-                marker: {
-                    lineWidth: 1,
-                    lineColor: '#ffffff'
-                }
-            }
-        },
-        series: [{
-            name: 'Queensland',
-            data: [502, 635, 809, 947, 1402, 3634, 5268]
-        }, {
-            name: 'New South Wales',
-            data: [106, 107, 111, 133, 221, 767, 1766]
-        }, {
-            name: 'Vicoria',
-            data: [163, 203, 276, 408, 547, 729, 628]
-        }, {
-            name: 'Northern Territory',
-            data: [18, 31, 54, 156, 339, 818, 1201]
-        }, {
-            name: 'South Australia',
-            data: [2, 2, 2, 6, 13, 30, 46]
-        }]
-    });
-  </script>
-  <script type="text/javascript">
-    Highcharts.chart('container2', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Monthly Vins'
-        },
-        subtitle: {
-            text: 'Source: WorldClimate.com'
-        },
-        xAxis: {
-            categories: [
-                'Jan',
-                'Feb',
-                'Mar',
-                'Apr',
-                'May',
-                'Jun',
-                'Jul',
-                'Aug',
-                'Sep'
-            ],
-            crosshair: true
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: 'Rainfall (mm)'
-            }
-        },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        series: [{
-            name: 'Calls Made',
-            data: [90.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4]
-
-        }, {
-            name: 'Visits',
-            data: [30.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2]
-
-        }, {
-            name: 'Files Received',
-            data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4]
-
-        }]
-    });
-  </script>
-  <script type="text/javascript">
-    Highcharts.chart('container3', {
-        chart: {
-            type: 'spline',
-            animation: Highcharts.svg, // don't animate in old IE
-            marginRight: 10,
-            events: {
-                load: function () {
-
-                    // set up the updating of the chart each second
-                    var series = this.series[0];
-                    setInterval(function () {
-                        var x = (new Date()).getTime(), // current time
-                            y = Math.random();
-                        series.addPoint([x, y], true, true);
-                    }, 1000);
-                }
-            }
-        },
-
-        time: {
-            useUTC: false
-        },
-
-        title: {
-            text: 'Live random data'
-        },
-        xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 150
-        },
-        yAxis: {
-            title: {
-                text: 'Value'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            headerFormat: '<b>{series.name}</b><br/>',
-            pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
-        },
-        legend: {
-            enabled: false
-        },
-        exporting: {
-            enabled: false
-        },
-        series: [{
-            name: 'Random data',
-            data: (function () {
-                // generate an array of random data
-                var data = [],
-                    time = (new Date()).getTime(),
-                    i;
-
-                for (i = -19; i <= 0; i += 1) {
-                    data.push({
-                        x: time + i * 1000,
-                        y: Math.random()
-                    });
-                }
-                return data;
-            }())
-        }]
-    });
-  </script>
-</body>
+  </body>
 </html>
