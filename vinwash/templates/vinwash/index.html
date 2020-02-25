@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
   <head>
-    <title>VINLOOKUP</title>
+    <title>TAKATA VIN-VIEW</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,7 +42,7 @@
                     <ul class="rd-navbar-nav">
                       <li class="rd-nav-item active"><a class="rd-nav-link" href="{% url 'vinwash-home' %}">HOME</a></li>
                         {% if user.is_authenticated %}
-              <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'vindecoder' %}">VIN Lookup</a></li>
+              <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'vindecoder' %}">TAKATA VIN-VIEW</a></li>
                              <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'logout' %}">Logout</a></li>
           {% else %}
               <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'login' %}">Login</a></li>
@@ -62,8 +62,8 @@
           <div class="container">
             <div class="row">
               <div class="col-md-12 homescreen">
-                <br>
-                  <h2 style="font-size: 50px;">VINLOOKUP</h2>
+                <!--<br>-->
+                  <h2 style="font-size: 50px;">TAKATA VIN-VIEW</h2>
 				  <h4>SALVAGE TAKATA AIRBAGS RECOVERY PROGRAM</h4>
 				  <h6><span class="fa fa-check-circle"></span> Check VIN details <span class="fa fa-check-circle"></span> Check STAR details <span class="fa fa-check-circle"></span> Check TAUT details</h6>
 				  <!--<div class="row-0">-->
@@ -79,7 +79,7 @@
       </section>
 
       <!-- Page Footer-->
-      <footer class="section footer-classic context-dark fixed-bottom"><p class="text-center">© 2020 Copyright ARAA  |  all rights reserved</p></footer>
+      <footer class="section footer-classic context-dark fixed-bottom"><p class="text-center">Â© 2020 Copyright ARAA  |  all rights reserved</p></footer>
     </div>
     <div class="snackbars" id="form-output-global"></div>
     <script src="{% static 'vinwash/js/core.min.js' %}"></script>

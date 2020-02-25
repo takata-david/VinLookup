@@ -1,10 +1,9 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
-<!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
   <head>
-    <title>About the program</title>
+    <title>TAKATA VIN-VIEW</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,10 +11,10 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,500,600,700,800,900,900i%7CRoboto:400">
     <link rel="stylesheet" href="{% static 'vinwash/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'vinwash/css/fonts.css' %}">
-    <link rel="stylesheet" href="{% static 'vinwash/css/style.css' %}">
-  </head>
+    <link rel="stylesheet" href="{% static 'vinwash/css/vinlook.css' %}">
 
-<body>
+  </head>
+<!--<body>
     <div class="preloader">
       <div class="preloader-body">
         <div class="cssload-container">
@@ -24,371 +23,708 @@
         <p>Loading...</p>
       </div>
     </div>
-    <div class="page">
+<div class="page">-->
       <!-- Page Header-->
-      <header class="section page-header">
-        <!-- RD Navbar-->
-        <div class="rd-navbar-wrap">
-          <nav class="rd-navbar rd-navbar-modern" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
-            <div class="rd-navbar-main-outer">
+
+    <div class="jumbotron" style="background-image:url('/media/vinwash/vin1.jpg');">
+        <div class="breadcrumbs-custom context-dark">
+          <div class="container">
+              <nav class="rd-navbar rd-navbar-modern" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+              <div class="rd-navbar-main-outer">
               <div class="rd-navbar-main">
                 <!-- RD Navbar Panel-->
                 <div class="rd-navbar-panel">
-                  <!-- RD Navbar Toggle-->
-                  <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
-                  <!-- RD Navbar Brand-->
-                  <div class="rd-navbar-brand"><a href="http://autorecycle.com.au/"><img class="brand-logo-light" src="/media/vinwash/araa.png" alt="" /></a></div>
+                <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+        <div class="rd-navbar-brand"><a href="http://autorecycle.com.au/"><img class="brand-logo-light" src="/media/vinwash/araa.png" alt="" /></a></div>
                 </div>
-                <div class="rd-navbar-main-element">
-                  <div class="rd-navbar-nav-wrap">
-                    <!-- RD Navbar Nav-->
-                    <ul class="rd-navbar-nav">
-           <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'vinwash-home' %}">HOME</a></li>
-                    <li class="rd-nav-item active"><a class="rd-nav-link" href="{% url 'vindecoder' %}">VIN Lookup</a></li>
-
-          {% if user.is_authenticated %}
-              <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'logout' %}">Logout</a></li>
+      <div class="rd-navbar-main-element" id="navbarNavAltMarkup">
+        <div class="rd-navbar-nav-wrap">
+          <a class="rd-nav-item rd-nav-link" href="{% url 'vinwash-home' %}">Home <span class="sr-only">(current)</span></a>
+          <a class="rd-nav-item rd-nav-link active" href="{% url 'vindecoder' %}">TAKATA VIN-VIEW</a>
+          {% if user.is_authenticated%}
+          <a class="rd-nav-item rd-nav-link" href="{% url 'logout' %}">Logout</a>
           {% else %}
-              <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'login' %}">Login</a></li>
+          <a class="rd-nav-item rd-nav-link" href="{% url 'login' %}">Login</a>
           {% endif %}
-       </ul>
-                  </div>
+        </div>
+      </div>
                 </div>
               </div>
-            </div>
-          </nav>
-        </div>
-      </header>
+    </nav>
 
-    <section class="parallax-container" data-parallax-img="/media/vinwash/icon-lists-title-bg.jpg">
-        <div class="breadcrumbs-custom context-dark">
-          <div class="container">
+            <div class="row justify-content-center">
+              <h2 class="breadcrumbs-custom-title" style="color: #1b9a08; font-size: 50px"><u>TAKATA VIN-VIEW</u></h2>
+            </div>
             <div class="row justify-content-center">
               <div class="col-12 col-lg-9">
-                <h2 class="breadcrumbs-custom-title" style="color: #1b9a08">VINLOOKUP</h2>
+
+                  <br>
                 <ul class="breadcrumbs-custom-path">
-                  <!--<li><a href="index.html">Home</a></li>
-                  <li class="active">About Us</li>-->
                      <form action="" method="POST" enctype="multipart/form-data">
-          <div class="row justify-content-md-center">
-            {% csrf_token %}
-                {{ form.your_vin | add_class:"form-control col-6"  }}
-            <div class="form-group">
-                <button class="btn btn-primary" type="submit" >Search</button>
-            </div>
-          </div>
-          </form>
+                          <div class="row justify-content-md-center">
+                            {% csrf_token %}
+                                {{ form.your_vin | add_class:"form-control col-6"  }}
+                            <div class="form-group">
+                                <button class="ml-1 btn btn-primary" type="submit" >Search</button>
+                            </div>
+                          </div>
+                      </form>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-      </section>
+    </div>
 
 
     <!-- Page Features -->
+    <section class="section section-lg bg-default">
 
-<section class="section section-lg bg-default">
-        <div class="container">
-          <div class="row-30">
-            <div class="col-lg-12">
-		<div class="row">
-		  <div style="border: 0px solid red;"  class="col-8">
-		  <br>
-          {% if vals %}
-              <table class="table table-bordered">
-			  <thead class="thead-dark">
-				<tr>
-				  <th scope="col">#</th>
-				  <th scope="col">Original Data</th>
-				  <th scope="col">Value</th>
-				</tr>
-			  </thead>
-			  <tbody>
-                {% if vals %}
-                    <!--
-                    <tr>
-                        <td>1</td>
-                        <td>Image</td>
-                        <td><a target="_blank" href="../../../media/{{ folder }}/{{ vals.0 }}/{{ vals.3 }}">{{ vals.3 }}</a></td>
-                    </tr>
-                    -->
-                    <tr>
-                        <td>1</td>
-                        <td>Stock #</td>
-                        <td>{{ vals.5 }}</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Location</td>
-                        <td>{{ vals.4 }}</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Business</td>
-                        <td>{{ biz.0 }}</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>State</td>
-                        <td>{{ biz.1 }}</td>
-                    </tr>
-                {% endif %}
+             <div class="container">
+                  <!--  ---- START d/p ---- -->
 
-			  </tbody>
-			  </table>
-          {% endif %}
-          {% if elec %}
-              <table class="table table-bordered">
-			  <thead class="thead-dark">
-				<tr>
-				  <th scope="col">#</th>
-				  <th scope="col">Original Data</th>
-				  <th scope="col">Value</th>
-				</tr>
-			  </thead>
-			  <tbody>
-                {% if vals1 %}
-                    <!--
-                    <tr>
-                        <td>1</td>
-                        <td>File</td>
-                        <td><a href="../../../media/electronic/{{ elec }}">File</a></td>
-                    </tr>
-                    -->
-                    <tr>
-                        <td>1</td>
-                        <td>Stock #</td>
-                        <td>{{ vals1.5 }}</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Location</td>
-                        <td>{{ vals1.4 }}</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Business</td>
-                        <td>{{ biz.0 }}</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>State</td>
-                        <td>{{ biz.1 }}</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Filename</td>
-                        <td>{{ elec }}</td>
-                    </tr>
-                {% endif %}
+                  <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="row justify-content-center">
+                            <div class="d-flex flex-row">
+                              {% if dr_cn == 1 %}
+                              <form action="" method="POST" >
+                                {% csrf_token %}
+                                <input type="hidden" value="Driver" name="airbaglocation" />
+                                <input type="hidden" value={{ vin }} name="your_vin" />
+                                <button class="btn btn-primary btn-lg active" type="submit">Driver</button>
+                              </form>
+                              {% endif %}
+                              {% if ps_cn == 1 %}
+                              <form action="" method="POST" >
+                                {% csrf_token %}
+                                <input type="hidden" value="Passenger" name="airbaglocation" />
+                                <input type="hidden" value={{ vin }} name="your_vin" />
+                                <button class="btn btn-primary btn-lg ml-1" type="submit">Passenger</button>
+                              </form>
+                              {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <!--  ---- END d/p ---- -->
+             {% if na_original %}
+                     No recycler file contains this vin. <br>
+                  {% endif %}
+                  {% if na_washedvins %}
+                     No recycler file contains this vin. <br>
+                  {% endif %}
+                  {% if na_star %}
+                     The vin is not present in the STAR system. <br>
+                  {% endif %}
+                  {% if na_taut %}
+                     The vin is not present in the TAUT system. <br>
+                  {% endif %}
+                  {% if affected_oem and na_washedvins and na_star and na_taut  %}
+                     The vin is affected, but no further record available with us.
+                  {% endif %}
 
-			  </tbody>
-			  </table>
-          {% endif %}
-
-
-          {% if wv_vals %}
-            <!-- add class 'table' for padding in table columns -->
-
-            <table class="table table-bordered">
-                <thead class="thead-dark">
-                    <tr>
-                        <th width="30%">Washed Data</th>
-                        <th width="70%">Value</th>
-                    </tr>
-                </thead>
-                <tbody>
+                  <div class="row justify-content-center">
+                    <table class="table table-bordered">
+                      <thead class="thead-dark">
                         <tr>
-                            <td>Make</td>
-                            <td>{{ wv_vals.1 }}</td>
+                          <th scope="col">VIN Details :- <b style="color: yellow; font-size: 20px">{% if dr_cn == 1 %}
+                                {{ vin }}
+                              {% elif ps_cn == 1 %}
+                                {{ vin }}
+                              {% endif %}
+                              {% if wv_vals %}
+                                | {{ wv_vals.1 }}
+                                {{ wv_vals.2 }}
+                                {{ wv_vals.5 }}
+                              {% endif %}
+                              {% if na_washedvins %}
+                                {% if st_vals %}
+                                 | {{ st_vals.26 }}
+                                  {{ st_vals.27 }}
+                                  {{ st_vals.30 }}
+                                {% endif %}
+                                {% if na_star %}
+                                  {% if ut_vals %}
+                                   | {{ ut_vals.18 }}
+                                    {{ ut_vals.19 }}
+                                    {{ ut_vals.22 }}
+                                  {% endif %}
+                                {% endif %}
+                              {% endif %}
+{% if affected_oem and na_washedvins and na_star and na_taut  %} {{details_oem.2}} | {{ details_oem.4 }} {{ details_oem.5 }} {{ details_oem.8 }}{% endif %}</b></th>
                         </tr>
-                        <tr>
-                            <td>Model</td>
-                            <td>{{ wv_vals.2 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Series</td>
-                            <td>{{ wv_vals.3 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Year</td>
-                            <td>{{ wv_vals.4 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Side</td>
-                            <td>{{ wv_vals.5 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Alpha</td>
-                            <td>{{ wv_vals.6 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Vehicle Id</td>
-                            <td>{{ wv_vals.0 }}</td>
-                        </tr>
-                </tbody>
-            </table>
-                <br>
-
-          {% endif %}
-          {% if st_vals %}
-            <!-- add class 'table' for padding in table columns -->
-
-            <table class="table table-bordered">
-                <thead class="thead-dark">
-                    <tr>
-                        <th width="30%">Star Data</th>
-                        <th width="70%">Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        <tr>
-                            <td>Star#</td>
-                            <td>{{ st_vals.0 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Barcode</td>
-                            <td>{{ st_vals.1 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Praf Num</td>
-                            <td>{{ st_vals.2 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Notifier First Name</td>
-                            <td>{{ st_vals.3 }}</td>
-                        </tr>
-                        <tr>
-                            <td>ABN</td>
-                            <td>{{ st_vals.4 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Company Name</td>
-                            <td>{{ st_vals.5 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Email</td>
-                            <td>{{ st_vals.6 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Business Phone</td>
-                            <td>{{ st_vals.7 }}</td>
-                        </tr>
-                </tbody>
-            </table>
-                <br>
-
-          {% endif %}
-          {% if ut_vals %}
-            <!-- add class 'table' for padding in table columns -->
-            <table class="table table-bordered">
-                <thead class="thead-dark">
-                    <tr>
-                        <th width="30%">TAUT Data</th>
-                        <th width="70%">Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        <tr>
-                            <td>Company Name</td>
-                            <td>{{ ut_vals.8 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Date of Sale</td>
-                            <td>{{ ut_vals.1 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Date Signed</td>
-                            <td>{{ ut_vals.2 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Email</td>
-                            <td>{{ ut_vals.3 }}</td>
-                        </tr>
-                        <tr>
-                            <td>License Detail</td>
-                            <td>{{ ut_vals.4 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Notification Date</td>
-                            <td>{{ ut_vals.5 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Status</td>
-                            <td>{{ ut_vals.6 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Seller Phone</td>
-                            <td>{{ ut_vals.7 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Condition</td>
-                            <td>{{ ut_vals.0 }}</td>
-                        </tr>
-                </tbody>
-            </table>
-                <br>
-          {% endif %}
-
-          {% if zh_vals %}
-            <!-- add class 'table' for padding in table columns -->
-            <table class="table table-bordered">
-                <thead class="thead-dark">
-                    <tr>
-                        <th width="30%">Zoho Data</th>
-                        <th width="70%">Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        {% for c in zh_vals %}
+                      </thead>
+                    </table>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                        {% if wv_vals %}
+                        <table class="table table-bordered">
+                          <thead class="thead-dark">
                             <tr>
-                                <td>Timestamp for call</td>
-                                <td>{{ c }}</td>
+                              <th scope="col">VIN Details</th>
+                              <th scope="col">Value</th>
                             </tr>
-                        {% endfor %}
-                </tbody>
-            </table>
-            <br>
-          {% endif %}
-          {% if notfound %}
-          {% endif %}
+                          </thead>
+                          <tbody>
+                                <tr>
+                                    <td>Make</td>
+                                    <td>{{ wv_vals.1 }} </td>
+                                </tr>
+                                <tr>
+                                    <td>Model</td>
+                                    <td>{{ wv_vals.2 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Series</td>
+                                    <td>{{ wv_vals.3 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Year</td>
+                                    <td>{{ wv_vals.4 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Side</td>
+                                    <td>{{ wv_vals.5 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Alpha</td>
+                                    <td>{{ wv_vals.6 }}</td>
+                                </tr>
+                          </tbody>
+                        </table>
+                        {% endif %}
+                        {% if na_washedvins %}
+                            {% if st_vals %}
+                            <table class="table table-bordered">
+                              <thead class="thead-dark">
+                                <tr>
+                                  <th scope="col">VIN Details</th>
+                                  <th scope="col">Value</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                    <tr>
+                                        <td>Make</td>
+                                        <td>{{ st_vals.26 }} </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Model</td>
+                                        <td>{{ st_vals.27 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Series</td>
+                                        <td>{{ st_vals.28 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Year</td>
+                                        <td>{{ st_vals.29 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Side</td>
+                                        <td>{{ st_vals.30 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Alpha</td>
+                                        <td>{{ st_vals.31 }}</td>
+                                    </tr>
+                              </tbody>
+                            </table>
+                            {% endif %}
+                            {% if na_star %}
+                                {% if ut_vals %}
+                                <table class="table table-bordered">
+                                  <thead class="thead-dark">
+                                    <tr>
+                                      <th scope="col">VIN Details</th>
+                                      <th scope="col">Value</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                        <tr>
+                                            <td>Make</td>
+                                            <td>{{ ut_vals.18 }} </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Model</td>
+                                            <td>{{ ut_vals.19 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Series</td>
+                                            <td>{{ ut_vals.20 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Year</td>
+                                            <td>{{ ut_vals.21 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Side</td>
+                                            <td>{{ ut_vals.22 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Alpha</td>
+                                            <td>{{ ut_vals.23 }}</td>
+                                        </tr>
+                                  </tbody>
+                                </table>
+                                {% endif %}
+                                {% if na_taut %}
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    {% if vals %}
+                    <div class="col-md-6">
+                        <table class="table table-bordered">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">VIN Source</th>
+                              <th scope="col">Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                                <tr>
+                                    <td>Stock #</td>
+                                    <td>{{ vals.2 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Location</td>
+                                    <td>{{ vals.3 }} </td>
+                                </tr>
+                                <tr>
+                                    <td>File Date</td>
+                                    <td>{{ vals.1 }}</td>
+                                </tr>
+                                <!--<tr>
+                                    <td>Vin</td>
+                                    <td>{{ vals.7 }}</td>
+                                </tr>-->
+                                <tr>
+                                    <td>Business Name</td>
+                                    <td>{{ biz.0 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Business Address</td>
+                                    <td>{{ biz.2 }}, {{ biz.3 }}, {{ biz.1 }}</td>
+                                </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                  </div>
+                    {% endif %}
+                <!-- ------------ STAR DETAILS ------------- -->
+                <br>
+                  <div class="row">
+                    {% if st_vals %}
+                    <table class="table table-bordered">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">STAR Details</th>
+                        </tr>
+                      </thead>
+                    </table>
+                    <div class="col-md-4">
+                        <table class="table table-bordered">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">STAR Details</th>
+                              <th scope="col">Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                                <tr>
+                                    <td>STAR Id</td>
+                                    <td>{{ st_vals.0 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Barcode</td>
+                                    <td>{{ st_vals.1 }} </td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td>{{ st_vals.8 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Condition</td>
+                                    <td>{{ st_vals.9 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Submission Date</td>
+                                    <td>{{ st_vals.25 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Warehouse</td>
+                                    <td>{{ st_vals.10 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Courier</td>
+                                    <td>{{ st_vals.12 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Notification Date</td>
+                                    <td>{{ st_vals.24 }}</td>
+                                </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <table class="table table-bordered">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">Recycler</th>
+                              <th scope="col">Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                                <tr>
+                                    <td>Contact Name</td>
+                                    <td>{{ st_vals.13 }}-{{ st_vals.14 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>ABN</td>
+                                    <td>{{ st_vals.4 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Company Name</td>
+                                    <td>{{ st_vals.5 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Trading Name</td>
+                                    <td>{{ st_vals.15 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Street</td>
+                                    <td>{{ st_vals.16 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>City</td>
+                                    <td>{{ st_vals.17 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>State</td>
+                                    <td>{{ st_vals.18 }}</td>
+                                </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <table class="table table-bordered">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">Recycler</th>
+                              <th scope="col">Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                                <tr>
+                                    <td>Post</td>
+                                    <td>{{ st_vals.19 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Company Email</td>
+                                    <td>{{ st_vals.20 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Company Phone</td>
+                                    <td>{{ st_vals.7 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Contact Email</td>
+                                    <td>{{ st_vals.6 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>BSB</td>
+                                    <td>{{ st_vals.21 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Account #</td>
+                                    <td>{{ st_vals.22 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Phone</td>
+                                    <td>{{ st_vals.23 }}</td>
+                                </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
+                    {% if st_vals %}
+                      <div class="col-md-5">
+                        {% if st_vals_url_fcs %}
+                        <table class="table table-bordered">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">Certificate-Issued</th>
+                              <th scope="col"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                                <tr>
+                                    <td>Statutory Declaration</td>
+                                    <td><a href={{ st_vals_url_stat }}>Link</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Field Officer Declaration</td>
+                                    <td><a href={{ st_vals_url_fcs }}>Link</a></td>
+                                </tr>
+                                <tr>
+                                    <td>COD</td>
+                                    <td><a target="_blank" href={{ cod_url }}>Link</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Recycler File</td>
+                                    <td><a target="_blank" href={{ st_vals_url_vinfile }}>Link</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Record number in the file</td>
+                                    <td> {{ st_line1 }} <br>{% if st_line1 != st_line2  %} {{ st_line2 }} {% endif %}</td>
+                                </tr>
+                          </tbody>
+                        </table>
+                        {%  endif  %}
+                      </div>
+                      <!--
+                      <div class="col-md-7">
+                        <table class="table table-bordered">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">COD</th>
+                              <th scope="col"></th>
+                              <th scope="col"></th>
+                              <th scope="col"></th>
+                              <th scope="col"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                                <tr>
+                                    <td>Vin</td>
+                                    <td>{{ st_vals.13 }}-{{ st_vals.14 }}</td>
+                                    <td></td>
+                                    <td>Year</td>
+                                    <td>{{ st_year }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Make</td>
+                                    <td>{{ st_make }}</td>
+                                    <td></td>
+                                    <td>Airbag Location</td>
+                                    <td>{{ st_airbaglocation }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Model</td>
+                                    <td>{{ st_model }}</td>
+                                    <td></td>
+                                    <td>Alpha</td>
+                                    <td>{{ st_alpha }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Series</td>
+                                    <td>{{ st_series }}</td>
+                                    <td></td>
+                                    <td>Submitted to Star</td>
+                                    <td>{{ st_submitted }}</td>
+                                </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    -->
+                    {% endif %}
+                    {% if na_star %}
+                    {% endif %}
+                  </div>
+                  <!-- ------------ END STAR DETAILS------------ -->
 
+                  <!-- ------------ TAUT DETAILS ------------- -->
+                  <br>
+                  <div class="row justify-content-center">
 
-		  </div>
-		  <div style="border: 0px solid red;"  class="col-4">
-			<div class="container bg-warning" style="margin-top: 26px; border: solid; background: yellow">
-			  <!-- Content here -->
-			  <br>
-              {% if vin %}
-                  <h4 class=" text-center">Showing results for: </h4>
-                  <h4 class=" text-center"><u>{{ vin }}</u></h4>
+                  </div>
+                  <div class="row">
+                    {% if ut_vals %}
+                    <table class="table table-bordered">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">TAUT Details</th>
+                        </tr>
+                      </thead>
+                    </table>
+                    <div class="col-md-6">
+                        <table class="table table-bordered">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">TAUT Details</th>
+                              <th scope="col">Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                                <tr>
+                                    <td>License Detail</td>
+                                    <td>{{ ut_vals.4 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Date of Sale</td>
+                                    <td>{{ ut_vals.1 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Date Signed</td>
+                                    <td>{{ ut_vals.2 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Notification Date</td>
+                                    <td>{{ ut_vals.5 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Condition</td>
+                                    <td>{{ ut_vals.0 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>PraNUM</td>
+                                    <td>{{ ut_vals.9 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td>{{ ut_vals.6 }}</td>
+                                </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-bordered">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">TAUT Recycler Details</th>
+                              <th scope="col">Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>{{ ut_vals.10 }}-{{ ut_vals.11 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Company Name</td>
+                                    <td>{{ ut_vals.8 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Business Phone</td>
+                                    <td>{{ ut_vals.12 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>{{ ut_vals.3 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Recycler ABN</td>
+                                    <td>{{ ut_vals.13 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Street, City</td>
+                                    <td>{{ ut_vals.14 }}, {{ ut_vals.15 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Post code, State</td>
+                                    <td>{{ ut_vals.16 }}, {{ ut_vals.17 }}</td>
+                                </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
+                    {% if na_taut %}
+                    {% endif %}
+                  </div>
+                  <!-- ------------ END TAUT DETAILS------------ -->
 
-              {% endif %}
-			  <br>
-			  <br>
-			</div>
-
-		  </div>
-		</div>
-
+                  <!-- ------------ START check in oem fields if vin not anywhere ---- -->
+                  {% if affected_oem and na_washedvins and na_star and na_taut  %}
+                  <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-bordered">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">From OEM</th>
+                              <th scope="col">Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                                <tr>
+                                    <td>Make</td>
+                                    <td>{{ details_oem.4 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Model</td>
+                                    <td>{{ details_oem.5 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Series</td>
+                                    <td>{{ details_oem.6 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Year</td>
+                                    <td>{{ details_oem.7 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Airbag Location</td>
+                                    <td>{{ details_oem.8 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Alpha</td>
+                                    <td>{{ details_oem.9 }}</td>
+                                </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                    {%  if flag %}
+                    <div class="col-md-6">
+                        <table class="table table-bordered">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">From OEM</th>
+                              <th scope="col">Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                                <tr>
+                                    <td>Make</td>
+                                    <td>{{ details_oem.15 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Model</td>
+                                    <td>{{ details_oem.16 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Series</td>
+                                    <td>{{ details_oem.17 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Year</td>
+                                    <td>{{ details_oem.18 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Airbag Location</td>
+                                    <td>{{ details_oem.19 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Alpha</td>
+                                    <td>{{ details_oem.20 }}</td>
+                                </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
+                  </div>
+                {% endif %}
+                  <!-- ------------ END   check in oem fiels if vin not anywhere ---- -->
             </div>
-          </div>
-        </div>
-      </section>
+    </section>
 
+     <footer class="section footer-classic context-dark">
+      <p class="text-center">Â© 2020 Copyright ARAA  |  all rights reserved</p>
+     </footer>
+</div>
+<div class="snackbars" id="form-output-global"></div>
+<script src="{% static 'vinwash/js/core.min.js' %}"></script>
+<script src="{% static 'vinwash/js/script.js' %}"></script>
 
-
-
-
-
-    <!-- /.row -->
-
-  <footer class="section footer-classic context-dark"><p class="text-center">© 2020 Copyright ARAA  |  all rights reserved</p></footer>
-    </div>
-    <div class="snackbars" id="form-output-global"></div>
-     <script src="{% static 'vinwash/js/core.min.js' %}"></script>
-    <script src="{% static 'vinwash/js/script.js' %}"></script>
-
-  </body>
+</body>
 </html>

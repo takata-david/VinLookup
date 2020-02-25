@@ -10,4 +10,5 @@ class vinfileForm(forms.ModelForm):
 
 
 class VinForm(forms.Form):
-    your_vin = forms.CharField(label='Please Enter Your Vin', max_length=100)
+    your_vin = forms.CharField(label='Please Enter Your Vin', max_length=17, widget=forms.TextInput(
+        attrs={'placeholder': 'Enter 17-digit VIN'}))

@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'araa.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
-        'NAME': '04Feb',
+        'NAME': '14Feb',
         'HOST': 'devdjango.database.windows.net',
         'USER': 'takata_prafull',
         'PASSWORD': 'Vinwash001',
